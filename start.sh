@@ -1,3 +1,3 @@
 #!/bin/bash
-cd /home/team/shared/postpilot/api
+cd "$(dirname "$0")/api"
 exec node src/index.js
