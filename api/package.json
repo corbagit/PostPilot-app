@@ -1,0 +1,38 @@
+{
+  "name": "postpilot-api",
+  "version": "1.0.0",
+  "description": "PostPilot API backend — Auth, billing, and content management",
+  "main": "src/index.js",
+  "type": "module",
+  "scripts": {
+    "start": "node src/index.js",
+    "dev": "node --watch src/index.js",
+    "migrate": "node src/db/migrate.js",
+    "test": "node --test tests/",
+    "seed": "node scripts/seed-demo.js",
+    "seed-demo": "node scripts/seed-demo.js",
+    "setup-stripe": "node scripts/setup-stripe.js",
+    "setup-paypal": "node scripts/setup-paypal.js",
+    "setup": "node scripts/setup-stripe.js"
+  },
+  "dependencies": {
+    "@paypal/checkout-server-sdk": "^1.0.3",
+    "@types/bcryptjs": "^2.4.6",
+    "@types/better-sqlite3": "^7.6.13",
+    "@types/cors": "^2.8.19",
+    "@types/express": "^5.0.6",
+    "@types/jsonwebtoken": "^9.0.10",
+    "@types/node": "^25.9.3",
+    "@types/uuid": "^10.0.0",
+    "bcryptjs": "^2.4.3",
+    "better-sqlite3": "^11.8.1",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2",
+    "jsonwebtoken": "^9.0.2",
+    "stripe": "^17.5.0",
+    "tsx": "^4.22.4",
+    "typescript": "^6.0.3",
+    "uuid": "^11.1.0"
+  }
+}

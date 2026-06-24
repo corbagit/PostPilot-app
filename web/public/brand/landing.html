@@ -1,0 +1,569 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PostPilot — Transform One Idea Into a Week's Worth of Content</title>
+
+  <!-- Open Graph / SEO Meta Tags -->
+  <meta property="og:title" content="PostPilot — Transform One Idea Into a Week's Worth of Content">
+  <meta property="og:description" content="Generate platform-optimized social posts, captions, hashtags, and social graphics for Instagram, LinkedIn, and Twitter/X in seconds.">
+  <meta property="og:image" content="./og-image.png">
+  <meta property="og:type" content="website">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="PostPilot — Transform One Idea Into a Week's Worth of Content">
+  <meta name="twitter:description" content="Generate platform-optimized social posts, captions, hashtags, and social graphics for Instagram, LinkedIn, and Twitter/X in seconds.">
+  <meta name="twitter:image" content="./og-image.png">
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Custom Brand Stylesheet -->
+  <link rel="stylesheet" href="./brand.css">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+            display: ['Plus Jakarta Sans', 'sans-serif'],
+            mono: ['Fira Code', 'monospace']
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    .glass {
+      background: rgba(15, 23, 42, 0.85);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+    }
+    .grid-bg-dark {
+      background-image: radial-gradient(#1e293b 1.5px, transparent 1.5px);
+      background-size: 24px 24px;
+    }
+    .glow-hover:hover {
+      box-shadow: 0 0 30px 0 rgba(99, 102, 241, 0.4);
+    }
+  </style>
+</head>
+<body class="bg-[#0F172A] text-[#F8FAFC] font-sans antialiased selection:bg-blue-500 selection:text-white">
+
+  <!-- Navigation -->
+  <nav class="sticky top-0 z-50 w-full border-b border-slate-800 glass">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+      <div class="flex items-center gap-3">
+        <img src="./logo-white.svg" alt="PostPilot Logo" class="h-10 w-auto">
+      </div>
+      <div class="hidden md:flex items-center gap-8 font-display font-semibold text-sm">
+        <a href="#features" class="text-slate-300 hover:text-white transition">Features</a>
+        <a href="#demo" class="text-slate-300 hover:text-white transition">Live Demo</a>
+        <a href="#pricing" class="text-slate-300 hover:text-white transition">Pricing</a>
+        <a href="./index.html" class="text-slate-300 hover:text-white transition">Brand System</a>
+      </div>
+      <div class="flex items-center gap-4">
+        <a href="#demo" class="btn btn-primary !py-2.5 !px-5 text-sm !rounded-xl">Try Free</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <header class="relative pt-24 pb-20 px-4 sm:px-6 lg:px-8 grid-bg-dark overflow-hidden border-b border-slate-900">
+    <!-- Ambient light glow backdrops -->
+    <div class="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-blue-500/10 rounded-full blur-3xl -z-10"></div>
+    <div class="absolute top-1/3 left-1/3 w-[300px] h-[300px] bg-pink-500/10 rounded-full blur-3xl -z-10"></div>
+
+    <div class="max-w-5xl mx-auto text-center space-y-8 relative z-10">
+      <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-slate-800/80 border border-slate-700/60 text-slate-300 font-semibold text-xs tracking-wider uppercase">
+        <span class="flex h-2 w-2 relative">
+          <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-pink-400 opacity-75"></span>
+          <span class="relative inline-flex rounded-full h-2 w-2 bg-pink-500"></span>
+        </span>
+        Special Launch Promo: 1st Month Free
+      </div>
+
+      <h1 class="text-5xl sm:text-6xl md:text-7xl font-display font-extrabold tracking-tight leading-tight max-w-4xl mx-auto">
+        Transform one raw idea into a<br>
+        <span class="bg-gradient-to-r from-blue-400 via-indigo-400 to-pink-500 bg-clip-text text-transparent">week's worth of platform content.</span>
+      </h1>
+
+      <p class="text-lg sm:text-xl text-slate-400 max-w-2xl mx-auto leading-relaxed">
+        PostPilot generates tailored, platform-optimized posts, captions, hashtags, and social graphics for Instagram, LinkedIn, and Twitter/X in seconds. Save 5+ hours every single week.
+      </p>
+
+      <div class="flex flex-col sm:flex-row items-center justify-center gap-4 pt-4">
+        <a href="#demo" class="btn btn-primary w-full sm:w-auto text-base !py-3.5 !px-8 shadow-xl shadow-blue-500/20">Generate Posts Now</a>
+        <a href="#pricing" class="btn btn-secondary !bg-slate-800 !text-white !border-slate-700 hover:!bg-slate-700 w-full sm:w-auto text-base !py-3.5 !px-8">View Subscription Plans</a>
+      </div>
+
+      <div class="pt-12 max-w-4xl mx-auto">
+        <div class="relative p-2.5 bg-slate-850 rounded-2xl border border-slate-800/80 shadow-2xl bg-slate-900/40 backdrop-blur-md">
+          <img src="./hero-illustration.png" alt="PostPilot Premium Platform" class="rounded-xl w-full h-auto shadow-2xl">
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Key Metrics / KPIs -->
+  <section class="py-12 border-b border-slate-900 bg-slate-950/40">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+        <div>
+          <div class="text-3xl sm:text-4xl font-display font-extrabold text-blue-400">5+ Hours</div>
+          <div class="text-slate-400 text-sm mt-1">Saved per week / user</div>
+        </div>
+        <div>
+          <div class="text-3xl sm:text-4xl font-display font-extrabold text-indigo-400">30+ Posts</div>
+          <div class="text-slate-400 text-sm mt-1">Generated per minute</div>
+        </div>
+        <div>
+          <div class="text-3xl sm:text-4xl font-display font-extrabold text-pink-400">3 Channels</div>
+          <div class="text-slate-400 text-sm mt-1">Optimized simultaneously</div>
+        </div>
+        <div>
+          <div class="text-3xl sm:text-4xl font-display font-extrabold text-emerald-400">98%</div>
+          <div class="text-slate-400 text-sm mt-1">Consistency rating</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Interactive Live Demo Widget -->
+  <section id="demo" class="py-24 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 border-b border-slate-900">
+    <div class="text-center max-w-3xl mx-auto mb-16 space-y-4">
+      <h2 class="text-4xl sm:text-5xl font-display font-extrabold">Experience PostPilot Live</h2>
+      <p class="text-slate-400">Choose a raw marketing idea below (or type your own) to instantly watch PostPilot draft tailored social posts for your specific target networks.</p>
+    </div>
+
+    <!-- Live Platform Mockup Widget -->
+    <div class="bg-slate-900 rounded-2xl border border-slate-800 overflow-hidden shadow-2xl max-w-5xl mx-auto">
+      <!-- Panel Header -->
+      <div class="bg-slate-950 px-6 py-4 border-b border-slate-800 flex items-center justify-between">
+        <div class="flex items-center gap-2">
+          <span class="w-3.5 h-3.5 rounded-full bg-red-500/80"></span>
+          <span class="w-3.5 h-3.5 rounded-full bg-yellow-500/80"></span>
+          <span class="w-3.5 h-3.5 rounded-full bg-green-500/80"></span>
+        </div>
+        <div class="px-4 py-1.5 rounded-lg bg-slate-900 text-xs font-mono text-slate-400 border border-slate-800">
+          https://app.postpilot.com/generator
+        </div>
+        <div class="w-16"></div>
+      </div>
+
+      <!-- Core Workspace Grid -->
+      <div class="grid grid-cols-1 lg:grid-cols-12">
+        
+        <!-- Left: Input Controls -->
+        <div class="lg:col-span-5 p-6 border-r border-slate-800 space-y-6">
+          <div class="space-y-2">
+            <label class="block text-xs font-semibold text-slate-400 uppercase tracking-wider">Select Sample Raw Idea</label>
+            <div class="flex flex-col gap-2">
+              <button onclick="selectIdea(1)" id="btn-idea-1" class="w-full text-left p-3 rounded-xl bg-slate-850 hover:bg-slate-800 border border-slate-700/60 text-xs text-slate-300 transition font-medium">
+                ☕ Seattle Premium Specialty Coffee Cart Launch
+              </button>
+              <button onclick="selectIdea(2)" id="btn-idea-2" class="w-full text-left p-3 rounded-xl bg-slate-950/40 hover:bg-slate-850 border border-slate-800/80 text-xs text-slate-400 transition font-medium">
+                🐕 Subscription Box for Fair-Trade Organic Dog Treats
+              </button>
+              <button onclick="selectIdea(3)" id="btn-idea-3" class="w-full text-left p-3 rounded-xl bg-slate-950/40 hover:bg-slate-850 border border-slate-800/80 text-xs text-slate-400 transition font-medium">
+                💪 Boutique Fitness Pilates Studio Launch Promo
+              </button>
+            </div>
+          </div>
+
+          <div class="space-y-2">
+            <div class="flex justify-between items-center">
+              <label class="block text-xs font-semibold text-slate-400 uppercase tracking-wider">Or Custom raw idea</label>
+              <span class="text-[10px] text-slate-500">Up to 280 chars</span>
+            </div>
+            <textarea id="custom-idea-text" class="w-full h-24 p-3 bg-slate-950 border border-slate-800 rounded-xl text-sm focus:outline-none focus:border-blue-500 transition text-slate-300" placeholder="Type any business idea or concept here..."></textarea>
+          </div>
+
+          <button onclick="generateCustomPosts()" class="w-full py-3.5 rounded-xl bg-gradient-to-r from-blue-500 to-indigo-500 text-white font-display font-bold text-sm tracking-wide shadow-lg shadow-blue-500/10 hover:opacity-95 transition">
+            ⚡ Generate 1-Week Content Pack
+          </button>
+        </div>
+
+        <!-- Right: Real-time Optimized Previews -->
+        <div class="lg:col-span-7 bg-slate-950/40 p-6 flex flex-col min-h-[420px]">
+          <!-- Platform Tabs -->
+          <div class="flex border-b border-slate-800 mb-6 gap-2">
+            <button onclick="switchTab('instagram')" id="tab-instagram" class="px-4 py-2 border-b-2 border-blue-500 text-blue-400 font-display font-semibold text-xs transition">
+              📷 Instagram Optimized
+            </button>
+            <button onclick="switchTab('twitter')" id="tab-twitter" class="px-4 py-2 border-b-2 border-transparent text-slate-400 hover:text-white font-display font-semibold text-xs transition">
+              🐦 Twitter/X Thread Hook
+            </button>
+            <button onclick="switchTab('linkedin')" id="tab-linkedin" class="px-4 py-2 border-b-2 border-transparent text-slate-400 hover:text-white font-display font-semibold text-xs transition">
+              💼 LinkedIn Narrative
+            </button>
+          </div>
+
+          <!-- Loading state placeholder -->
+          <div id="loading-spinner" class="hidden my-auto flex flex-col items-center justify-center space-y-4">
+            <div class="w-8 h-8 rounded-full border-4 border-slate-800 border-t-blue-500 animate-spin"></div>
+            <p class="text-xs text-slate-400 font-mono">Pilot AI running predictions...</p>
+          </div>
+
+          <!-- Post Content Rendering Area -->
+          <div id="post-viewer" class="flex-1 flex flex-col justify-between space-y-4">
+            <div class="space-y-4">
+              <!-- Platform Header Info -->
+              <div class="flex items-center justify-between">
+                <div class="flex items-center gap-3">
+                  <div class="w-10 h-10 rounded-full bg-gradient-to-tr from-blue-500 to-indigo-500 p-0.5 flex items-center justify-center">
+                    <div class="w-full h-full rounded-full bg-slate-950 flex items-center justify-center">
+                      <img src="./logo-icon.svg" class="w-6 h-6" alt="Pilot Avatar">
+                    </div>
+                  </div>
+                  <div>
+                    <div class="text-xs font-bold text-slate-200">PostPilot Sandbox</div>
+                    <div class="text-[10px] text-slate-500">Scheduled for Monday, 10:00 AM</div>
+                  </div>
+                </div>
+                <div class="px-2.5 py-1 rounded bg-blue-500/10 border border-blue-500/20 text-[10px] font-semibold text-blue-400 uppercase tracking-widest">
+                  AI Tailored
+                </div>
+              </div>
+
+              <!-- Main Post Text Block -->
+              <p id="generated-text" class="text-sm text-slate-300 leading-relaxed whitespace-pre-line bg-slate-950 p-4 rounded-xl border border-slate-850">
+                ☕ SEATTLE COFFEE LOVERS! ☕
+
+                We're officially rolling! The Seattle Coffee Cart is launching Monday morning at Westlake Center.
+
+                We serve organic, single-origin shade-grown beans sourced directly from fair-trade farms in Guatemala. To celebrate, your first espresso shot is 100% on us!
+
+                👇 Tag your Seattle coffee squad!
+              </p>
+
+              <!-- Hashtag Box -->
+              <div class="space-y-1">
+                <div class="text-[10px] uppercase font-semibold text-slate-500 tracking-wider">Predictive High-Performance Hashtags</div>
+                <div id="generated-hashtags" class="text-xs font-semibold text-[#EC4899] font-mono whitespace-pre-line">
+                  #SeattleCoffee #EspressoCart #SpecialtyCoffeeSeattle #LocalSeattle #SeattleBites
+                </div>
+              </div>
+            </div>
+
+            <!-- Card Bottom Visual Attachment representation -->
+            <div id="visual-attachment" class="mt-4 p-4 rounded-xl bg-slate-900 border border-slate-800 flex items-center gap-4">
+              <div class="w-14 h-14 rounded-lg overflow-hidden bg-slate-950 flex-shrink-0 flex items-center justify-center">
+                <img src="./logo-icon.svg" class="w-8 h-8 opacity-40" alt="Visual node representation">
+              </div>
+              <div>
+                <div class="text-xs font-bold text-slate-200">Custom Generated Campaign Art</div>
+                <div class="text-[10px] text-slate-500 mt-0.5">High-res 1024x1024 marketing illustration scheduled for export.</div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Value Proposition / Features Grid -->
+  <section id="features" class="py-24 bg-slate-950/20 border-b border-slate-900">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center max-w-3xl mx-auto mb-20 space-y-4">
+        <h2 class="text-4xl sm:text-5xl font-display font-extrabold">Engineered for Fast Growth</h2>
+        <p class="text-slate-400">PostPilot is the core workflow engine for modern digital creators and consultants looking to stay consistent without overhead.</p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <!-- Feature 1 -->
+        <div class="bg-slate-900 p-8 rounded-xl border border-slate-800 space-y-4">
+          <div class="w-12 h-12 rounded-lg bg-blue-500/10 border border-blue-500/20 text-blue-400 flex items-center justify-center">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4"/></svg>
+          </div>
+          <h3 class="text-xl font-display font-bold text-white">Platform-Tailored Logic</h3>
+          <p class="text-slate-400 text-sm leading-relaxed">
+            Every network has rules. PostPilot writes punchy, hook-driven content for X/Twitter threads, value-focused professional stories for LinkedIn, and visually focused captions for Instagram.
+          </p>
+        </div>
+
+        <!-- Feature 2 -->
+        <div class="bg-slate-900 p-8 rounded-xl border border-slate-800 space-y-4">
+          <div class="w-12 h-12 rounded-lg bg-indigo-500/10 border border-indigo-500/20 text-indigo-400 flex items-center justify-center">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+          </div>
+          <h3 class="text-xl font-display font-bold text-white">Instant Campaign Graphics</h3>
+          <p class="text-slate-400 text-sm leading-relaxed">
+            Our premium AI engine interprets your business strategy and outputs high-fidelity, customized marketing illustrations, dashboard components, or background styles for your scheduled posts.
+          </p>
+        </div>
+
+        <!-- Feature 3 -->
+        <div class="bg-slate-900 p-8 rounded-xl border border-slate-800 space-y-4">
+          <div class="w-12 h-12 rounded-lg bg-pink-500/10 border border-pink-500/20 text-pink-400 flex items-center justify-center">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+          </div>
+          <h3 class="text-xl font-display font-bold text-white">Unified Content Pipeline</h3>
+          <p class="text-slate-400 text-sm leading-relaxed">
+            Plan, queue, schedule, and review. PostPilot gives creators a singular, unified platform interface to schedule a week's worth of multi-channel consistency in under five minutes.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Pricing Tier Cards -->
+  <section id="pricing" class="py-24 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="text-center max-w-3xl mx-auto mb-20 space-y-4">
+      <h2 class="text-4xl sm:text-5xl font-display font-extrabold">Simple, Predictable Pricing</h2>
+      <p class="text-slate-400">Maintain an active social media engine without scaling your headcount. Select your plan below.</p>
+      
+      <!-- Toggle mock -->
+      <div class="pt-6 inline-flex items-center gap-3">
+        <span class="text-xs text-slate-300 font-semibold">Monthly Plan</span>
+        <button class="relative w-11 h-6 rounded-full bg-blue-500 transition-colors">
+          <span class="absolute top-1 left-1 w-4 h-4 rounded-full bg-white transform translate-x-5 transition-transform"></span>
+        </button>
+        <span class="text-xs text-slate-300 font-semibold flex items-center gap-1.5">
+          Annual Sub <span class="px-2 py-0.5 rounded bg-pink-500/20 text-pink-400 text-[10px] font-extrabold uppercase">Save 2 Mo</span>
+        </span>
+      </div>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+      
+      <!-- Starter Tier Card -->
+      <div class="bg-slate-900 rounded-2xl border border-slate-800 p-8 space-y-6 flex flex-col justify-between">
+        <div class="space-y-4">
+          <div class="flex items-center justify-between">
+            <h3 class="text-xl font-display font-bold text-white">Starter Squad</h3>
+            <span class="px-3 py-1 rounded bg-slate-800 text-slate-400 font-semibold text-xs uppercase tracking-wider">Early Creator</span>
+          </div>
+          <p class="text-slate-400 text-sm">Best for independent consultants, solo writers, and local micro-businesses.</p>
+          <div class="flex items-baseline gap-1 pt-2">
+            <span class="text-4xl font-display font-extrabold text-white">$29</span>
+            <span class="text-slate-400 text-sm">/ month</span>
+          </div>
+          <ul class="space-y-3 pt-4 text-sm text-slate-300">
+            <li class="flex items-center gap-2">
+              <svg class="w-4 h-4 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+              <span>10 posts scheduled / month</span>
+            </li>
+            <li class="flex items-center gap-2">
+              <svg class="w-4 h-4 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+              <span>1 platform channel target (Any)</span>
+            </li>
+            <li class="flex items-center gap-2">
+              <svg class="w-4 h-4 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+              <span>Core predictive AI optimization</span>
+            </li>
+          </ul>
+        </div>
+        <button class="w-full py-3 rounded-xl bg-slate-800 text-white font-display font-bold hover:bg-slate-700 transition">
+          Start Free Sandbox
+        </button>
+      </div>
+
+      <!-- Pro Tier Card -->
+      <div class="bg-slate-900 rounded-2xl border-2 border-blue-500 p-8 space-y-6 flex flex-col justify-between relative shadow-xl shadow-blue-500/5">
+        <div class="absolute -top-3.5 left-1/2 -translate-x-1/2 px-4 py-1 rounded-full bg-blue-500 text-white font-display font-extrabold text-[10px] uppercase tracking-widest">
+          Most Popular Target Plan
+        </div>
+
+        <div class="space-y-4">
+          <div class="flex items-center justify-between">
+            <h3 class="text-xl font-display font-bold text-white">Pro Pilot</h3>
+            <span class="px-3 py-1 rounded bg-blue-500/10 text-blue-400 font-semibold text-xs uppercase tracking-wider">Fast Growth</span>
+          </div>
+          <p class="text-slate-400 text-sm">Best for agencies, growing scale-ups, and active creators posting daily.</p>
+          <div class="flex items-baseline gap-1 pt-2">
+            <span class="text-4xl font-display font-extrabold text-white">$59</span>
+            <span class="text-slate-400 text-sm">/ month</span>
+          </div>
+          <ul class="space-y-3 pt-4 text-sm text-slate-300">
+            <li class="flex items-center gap-2">
+              <svg class="w-4 h-4 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+              <span class="font-bold text-white">30 posts scheduled / month</span>
+            </li>
+            <li class="flex items-center gap-2">
+              <svg class="w-4 h-4 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+              <span>All 3 platforms (IG, LI, Twitter/X)</span>
+            </li>
+            <li class="flex items-center gap-2">
+              <svg class="w-4 h-4 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+              <span class="font-bold text-white">AI Image & Illustration Generation</span>
+            </li>
+            <li class="flex items-center gap-2">
+              <svg class="w-4 h-4 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+              <span>Hashtag predictions & performance logs</span>
+            </li>
+          </ul>
+        </div>
+        <button class="w-full py-3 rounded-xl bg-gradient-to-r from-blue-500 to-indigo-500 text-white font-display font-bold shadow-lg shadow-blue-500/15 hover:opacity-95 transition">
+          Start Pro Trial
+        </button>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- CTA Banner Section -->
+  <section class="py-24 bg-slate-950 border-t border-slate-900 relative overflow-hidden">
+    <div class="absolute inset-0 bg-gradient-to-tr from-blue-500/5 via-transparent to-pink-500/5 -z-10"></div>
+    <div class="max-w-4xl mx-auto text-center px-4 sm:px-6 lg:px-8 space-y-6">
+      <h2 class="text-4xl sm:text-5xl font-display font-extrabold tracking-tight">Stay Consistent. Start Growing.</h2>
+      <p class="text-slate-400 max-w-xl mx-auto text-sm sm:text-base">
+        Join solo creators and boutiques automating content schedules in 5 minutes flat. Get started for free today. No credit card required.
+      </p>
+      <div class="pt-4">
+        <a href="#demo" class="btn btn-primary !py-3.5 !px-10">Generate First Week's Pack</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="border-t border-slate-900 bg-slate-950/60 text-slate-500 py-12 px-4 sm:px-6 lg:px-8 text-sm">
+    <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6">
+      <img src="./logo-white.svg" alt="PostPilot Logo" class="h-8 w-auto">
+      <div class="flex gap-8">
+        <a href="#features" class="hover:text-slate-300 transition">Features</a>
+        <a href="#demo" class="hover:text-slate-300 transition">Live Demo</a>
+        <a href="./index.html" class="hover:text-slate-300 transition">Design System</a>
+      </div>
+      <p>&copy; 2024 PostPilot. Built by team Designer. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <!-- Mock Interactive Dashboard Data JavaScript Logic -->
+  <script>
+    // Selected platform tab state
+    let activeTab = 'instagram';
+    
+    // Preset Campaign Mock Database
+    const campaigns = {
+      1: {
+        instagram: {
+          text: `☕ SEATTLE COFFEE LOVERS! ☕\n\nWe're officially rolling! The Seattle Coffee Cart is launching Monday morning at Westlake Center.\n\nWe serve organic, single-origin shade-grown beans sourced directly from fair-trade farms in Guatemala. To celebrate, your first espresso shot is 100% on us!\n\n👇 Tag your Seattle coffee squad!`,
+          tags: `#SeattleCoffee #EspressoCart #SpecialtyCoffeeSeattle #LocalSeattle #SeattleBites`
+        },
+        twitter: {
+          text: `We're launching our Seattle Coffee Cart on Monday at Westlake Center! ☕\n\nWhy we're different:\n- 100% shade-grown organic beans\n- Sourced directly from Guatemalan farmers (fair trade+)\n- Zero waste compostable cups\n\nDrop by Monday morning and get your first espresso free. (1/2) 🧵`,
+          tags: `#Seattle #CoffeeCommunity #Sustainable`
+        },
+        linkedin: {
+          text: `🚀 Launch announcement: Seattle Specialty Coffee Cart!\n\nAs a solo creator and founder, I wanted to build a business that prioritizes farmers first.\n\nBeginning Monday at Westlake Center, our cart will serve 100% shade-grown specialty espresso. By sourcing directly from farms in Guatemala, we ensure farmers receive 40% above fair-trade standard prices.\n\nJoin us for our soft launch on Monday — espresso is on us as we kick off this journey.`,
+          tags: `#Sustainability #EthicalBusiness #SeattleStartups #Sourcing`
+        }
+      },
+      2: {
+        instagram: {
+          text: `🐕 Tail-wagging goodness is finally here! 🐕\n\nMeet the BarkBox Organic Treat Subscription — designed for pups who deserve the very best. \n\nEvery treat is crafted from raw, human-grade, fair-trade organic ingredients sourced directly from small local family farms.\n\n✨ Hit the link in bio to claim your first trial box with premium treats!`,
+          tags: `#OrganicDogTreats #BarkBox #EthicalPet #PupSquad #DogLoversOfIG`
+        },
+        twitter: {
+          text: `Your dog deserves ingredients you can actually read. 🐕\n\nWe're launching the first 100% certified organic, fair-trade dog treat subscription box.\n\nHuman-grade, local, and packed with healthy superfoods for happy pups. Claim your first free box below:`,
+          tags: `#PetStartups #OrganicLiving #DogProducts`
+        },
+        linkedin: {
+          text: `🐾 Redefining the Pet Industry with Sustainable Sourcing\n\nMost dog treats are made from factory-farm surplus. We wanted to build something better for our pets and our planet.\n\nToday we are announcing the launch of BarkBox Organic treats. Every single ingredient in our treats is certified fair-trade and sourced directly from small-scale family agricultural cooperatives.\n\nWe're scaling pet nutrition, responsibly.`,
+          tags: `#PetNutrition #SupplyChain #CorporateResponsibility #Startups`
+        }
+      },
+      3: {
+        instagram: {
+          text: `💪 45 Minutes. Zero Impact. Maximum Burn. 💪\n\nOur brand new boutique Pilates studio is officially opening in the heart of the district!\n\nCombining high-intensity athletic pilates with low-impact, joint-friendly mechanics designed to tone, stretch, and strengthen.\n\n🎟️ LIMITED Opening Offer: Book your first session for 50% off!`,
+          tags: `#PilatesStudio #BoutiqueFitness #LowImpactHighIntensity #PilatesBurn #MindBody`
+        },
+        twitter: {
+          text: `Pilates, re-engineered. 💪\n\nWe are launching our 45-minute High-Intensity, Low-Impact classes this Saturday!\n\nMaximum metabolic burn without the stress on your joints. Opening class spots are 50% off. Secure yours below:`,
+          tags: `#FitnessTech #PilatesLife #BoutiqueOpening`
+        },
+        linkedin: {
+          text: `📈 The Rise of High-Intensity Low-Impact Boutique Fitness\n\nTraditional HIIT workouts are leading to higher joint injury rates among busy professionals. That's why we're bringing athletic pilates to the forefront.\n\nWe're launching our state-of-the-art Boutique Studio. Our proprietary 45-minute workout burns calories efficiently while strengthening postural alignment and protecting joint longevity.\n\nFirst trial class open now.`,
+          tags: `#BoutiqueFitness #HealthAndWellness #PhysicalLongevity #LocalOpening`
+        }
+      }
+    };
+
+    // Selected Preset ID
+    let currentPresetId = 1;
+
+    function selectIdea(presetId) {
+      currentPresetId = presetId;
+      
+      // Update active styling of preset buttons
+      [1, 2, 3].forEach(id => {
+        const btn = document.getElementById(`btn-idea-${id}`);
+        if (id === presetId) {
+          btn.className = "w-full text-left p-3 rounded-xl bg-slate-850 hover:bg-slate-800 border border-slate-700/60 text-xs text-slate-300 transition font-medium";
+        } else {
+          btn.className = "w-full text-left p-3 rounded-xl bg-slate-950/40 hover:bg-slate-850 border border-slate-800/80 text-xs text-slate-400 transition font-medium";
+        }
+      });
+
+      // Clear custom text area
+      document.getElementById('custom-idea-text').value = '';
+
+      updatePostContent();
+    }
+
+    function switchTab(platform) {
+      activeTab = platform;
+
+      // Update tabs styling
+      ['instagram', 'twitter', 'linkedin'].forEach(p => {
+        const tab = document.getElementById(`tab-${p}`);
+        if (p === platform) {
+          tab.className = "px-4 py-2 border-b-2 border-blue-500 text-blue-400 font-display font-semibold text-xs transition";
+        } else {
+          tab.className = "px-4 py-2 border-b-2 border-transparent text-slate-400 hover:text-white font-display font-semibold text-xs transition";
+        }
+      });
+
+      updatePostContent();
+    }
+
+    function updatePostContent() {
+      const campaign = campaigns[currentPresetId];
+      if (campaign && campaign[activeTab]) {
+        document.getElementById('generated-text').innerText = campaign[activeTab].text;
+        document.getElementById('generated-hashtags').innerText = campaign[activeTab].tags;
+      }
+    }
+
+    function generateCustomPosts() {
+      const customText = document.getElementById('custom-idea-text').value.trim();
+      if (!customText) {
+        alert("Please select a sample idea above or enter a custom raw idea first!");
+        return;
+      }
+
+      // Show mock loader
+      document.getElementById('post-viewer').classList.add('hidden');
+      document.getElementById('loading-spinner').classList.remove('hidden');
+
+      setTimeout(() => {
+        // Mock custom content generation response
+        campaigns[99] = {
+          instagram: {
+            text: `✨ CHANGER OF WORKFLOWS! ✨\n\nWe're bringing your custom concept to life:\n\n"${customText}"\n\nPostPilot transforms this raw thought into high-performance media instantly.\n\n👇 Click bio link to start scheduling!`,
+            tags: `#CustomCampaign #PlatformOptimized #PostPilotAI #CreatorEconomy`
+          },
+          twitter: {
+            text: `Turn this raw concept into active content in 10 seconds:\n\n"${customText}"\n\n- No copywriter needed\n- Platform tailored rules\n- Scheduled in 1 click\n\nGet a week's worth of content free 👇`,
+            tags: `#Productivity #AIPower #SocialLaunch`
+          },
+          linkedin: {
+            text: `📈 Leveraging Automation to Streamline Operational Flow\n\nImplementing new initiatives such as:\n"${customText}"\n\nRequires continuous content distribution and narrative building. PostPilot automates that layer so developers and founders can stay focused on core features.\n\nScale with consistency.`,
+            tags: `#BusinessProcess #StrategicGrowth #TechAutomation #ProductPilot`
+          }
+        };
+
+        currentPresetId = 99;
+        
+        // Hide loader, show preview
+        document.getElementById('loading-spinner').classList.add('hidden');
+        document.getElementById('post-viewer').classList.remove('hidden');
+
+        updatePostContent();
+      }, 1000);
+    }
+  </script>
+</body>
+</html>

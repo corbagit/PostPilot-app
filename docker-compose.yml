@@ -1,0 +1,40 @@
+# ── Docker Compose for PostPilot ─────────────────────────
+# Spins up the API (which serves both API endpoints and frontend)
+
+services:
+  postpilot-api:
+    build:
+      context: ./api
+      dockerfile: Dockerfile
+    image: postpilot/api:latest
+    container_name: postpilot-api
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=production
+      - PORT=3000
+      - DATABASE_PATH=/app/data/postpilot.db
+      - JWT_SECRET=${JWT_SECRET:-change-me-to-a-random-secret}
+      - JWT_EXPIRES_IN=7d
+      - STRIPE_SECRET_KEY=${STRIPE_SECRET_KEY:-sk_test_placeholder}
+      - STRIPE_PUBLISHABLE_KEY=${STRIPE_PUBLISHABLE_KEY:-pk_test_placeholder}
+      - STRIPE_WEBHOOK_SECRET=${STRIPE_WEBHOOK_SECRET:-whsec_placeholder}
+      - STRIPE_PRICE_STARTER=${STRIPE_PRICE_STARTER:-price_starter_monthly}
+      - STRIPE_PRICE_PRO=${STRIPE_PRICE_PRO:-price_pro_monthly}
+    volumes:
+      - postpilot-data:/app/data
+      # Mount the web/public directory for brand assets
+      - ./web/public:/app/web/public:ro
+      # Mount the frontend build if available (created by web team)
+      - ./web/dist:/app/web/dist:ro
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost:3000/api/health"]
+      interval: 30s
+      timeout: 3s
+      retries: 3
+      start_period: 10s
+
+volumes:
+  postpilot-data:
+    name: postpilot-data

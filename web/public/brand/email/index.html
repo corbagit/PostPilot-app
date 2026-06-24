@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PostPilot — Email & Onboarding Visuals Explorer</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="./../brand.css">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brandDark: '#0F172A',
+            brandBlue: '#3B82F6',
+            brandIndigo: '#6366F1',
+            brandPink: '#EC4899',
+            brandSlate: '#1E293B',
+          },
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+            display: ['Plus Jakarta Sans', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+</head>
+<body class="bg-brandDark text-slate-100 min-h-screen font-sans">
+
+  <!-- TOP DECORATION GRID -->
+  <div class="absolute inset-0 bg-[linear-gradient(to_right,#0f172a_1px,transparent_1px),linear-gradient(to_bottom,#0f172a_1px,transparent_1px)] bg-[size:4rem_4rem] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_0%,#000_70%,transparent_100%)] opacity-30 pointer-events-none"></div>
+
+  <!-- CONTAINER -->
+  <div class="relative max-w-7xl mx-auto px-6 py-12">
+    
+    <!-- HEADER -->
+    <header class="flex flex-col md:flex-row items-center justify-between border-b border-slate-800 pb-8 mb-12 gap-6">
+      <div class="flex items-center gap-4">
+        <a href="./../index.html" class="hover:opacity-80 transition-opacity">
+          <img src="./../logo-icon.svg" alt="PostPilot Logo" class="w-12 h-12">
+        </a>
+        <div>
+          <h1 class="text-3xl font-display font-bold tracking-tight bg-gradient-to-r from-white via-slate-200 to-brandBlue bg-clip-text text-transparent">
+            Post<span class="text-brandBlue">Pilot</span>
+          </h1>
+          <p class="text-slate-400 text-sm mt-1">Email Templates & Onboarding Visuals Explorer</p>
+        </div>
+      </div>
+      <div class="flex gap-4">
+        <a href="./../index.html" class="px-4 py-2 text-sm font-semibold rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 transition-colors border border-slate-700/50">
+          ← Back to Design System
+        </a>
+      </div>
+    </header>
+
+    <!-- SECTION 1: EMAIL TEMPLATES PREVIEWER -->
+    <section class="mb-16">
+      <div class="mb-8">
+        <div class="inline-block bg-brandPink/10 text-brandPink text-xs font-bold uppercase tracking-wider px-3 py-1 rounded-full mb-3">
+          Responsive Templates
+        </div>
+        <h2 class="text-2xl font-display font-bold text-white mb-2">HTML Email Sandbox & Code Portal</h2>
+        <p class="text-slate-400 max-w-3xl">Explore and test our fully responsive, cross-client optimized transactional and marketing emails. Select a template to preview in real-time, toggle viewports, and copy the inline HTML code for backend integration.</p>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+        <!-- Sidebar Menu (Template Selector) -->
+        <div class="lg:col-span-4 flex flex-col gap-4">
+          <div class="bg-brandSlate/50 border border-slate-800/80 rounded-2xl p-6 backdrop-blur-sm">
+            <h3 class="text-slate-200 font-display font-bold text-sm uppercase tracking-wider mb-4 border-b border-slate-800 pb-2">Select a Template</h3>
+            <div class="flex flex-col gap-2">
+              <button onclick="loadTemplate('welcome')" id="btn-welcome" class="w-full text-left px-4 py-3 rounded-xl transition-all duration-200 flex items-center justify-between border border-transparent bg-slate-800/40 text-slate-300 hover:bg-slate-800/80 hover:text-white">
+                <div>
+                  <div class="font-bold text-sm">Welcome Email</div>
+                  <div class="text-xs text-slate-400 mt-0.5">Welcome & Onboarding Welcome</div>
+                </div>
+                <span class="text-brandPink text-xs font-bold">✓</span>
+              </button>
+
+              <button onclick="loadTemplate('weekly-digest')" id="btn-weekly-digest" class="w-full text-left px-4 py-3 rounded-xl transition-all duration-200 flex items-center justify-between border border-transparent bg-slate-800/40 text-slate-300 hover:bg-slate-800/80 hover:text-white">
+                <div>
+                  <div class="font-bold text-sm">Weekly Performance Report</div>
+                  <div class="text-xs text-slate-400 mt-0.5">Stats digest & schedule streak</div>
+                </div>
+                <span class="text-brandBlue text-xs font-bold">✓</span>
+              </button>
+
+              <button onclick="loadTemplate('upgrade-cta')" id="btn-upgrade-cta" class="w-full text-left px-4 py-3 rounded-xl transition-all duration-200 flex items-center justify-between border border-transparent bg-slate-800/40 text-slate-300 hover:bg-slate-800/80 hover:text-white">
+                <div>
+                  <div class="font-bold text-sm">Upgrade CTA Email</div>
+                  <div class="text-xs text-slate-400 mt-0.5">Starter to Pro upgrade conversion</div>
+                </div>
+                <span class="text-brandIndigo text-xs font-bold">✓</span>
+              </button>
+
+              <button onclick="loadTemplate('transactional-base')" id="btn-transactional-base" class="w-full text-left px-4 py-3 rounded-xl transition-all duration-200 flex items-center justify-between border border-transparent bg-slate-800/40 text-slate-300 hover:bg-slate-800/80 hover:text-white">
+                <div>
+                  <div class="font-bold text-sm">Transactional Base Frame</div>
+                  <div class="text-xs text-slate-400 mt-0.5">Reusable alert layout wrapper</div>
+                </div>
+                <span class="text-slate-400 text-xs font-bold">✓</span>
+              </button>
+            </div>
+
+            <!-- ACTION BUTTONS -->
+            <div class="mt-8 pt-6 border-t border-slate-800 flex flex-col gap-3">
+              <button onclick="copySourceCode()" class="w-full py-3 bg-brandIndigo hover:bg-brandIndigo/90 font-bold text-white text-sm rounded-xl shadow-lg shadow-brandIndigo/20 transition-all flex items-center justify-center gap-2">
+                📋 Copy Template Code
+              </button>
+              <button onclick="openRawWindow()" class="w-full py-3 bg-slate-800 hover:bg-slate-700 font-bold text-slate-200 text-sm rounded-xl transition-all flex items-center justify-center gap-2 border border-slate-700/50">
+                🌐 Open Raw HTML
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Sandbox Preview Frame Area -->
+        <div class="lg:col-span-8 flex flex-col gap-4">
+          <!-- Frame controls -->
+          <div class="flex items-center justify-between bg-slate-900 border border-slate-800 rounded-xl p-3 px-6">
+            <div class="flex items-center gap-3">
+              <span class="inline-block w-3 h-3 rounded-full bg-rose-500"></span>
+              <span class="inline-block w-3 h-3 rounded-full bg-amber-500"></span>
+              <span class="inline-block w-3 h-3 rounded-full bg-emerald-500"></span>
+              <span id="preview-title" class="text-slate-400 text-xs font-mono ml-4">welcome.html</span>
+            </div>
+            <!-- Viewport selectors -->
+            <div class="flex bg-slate-800 rounded-lg p-1 text-xs">
+              <button onclick="setViewport('desktop')" id="vp-desktop" class="px-3 py-1.5 rounded-md font-bold transition-all bg-slate-700 text-white shadow-sm">
+                🖥️ Desktop (600px)
+              </button>
+              <button onclick="setViewport('mobile')" id="vp-mobile" class="px-3 py-1.5 rounded-md font-bold transition-all text-slate-400 hover:text-white">
+                📱 Mobile (375px)
+              </button>
+            </div>
+          </div>
+
+          <!-- Preview iframe container -->
+          <div class="bg-slate-950 border border-slate-800 rounded-2xl p-1 flex justify-center items-center overflow-hidden min-h-[500px]">
+            <iframe id="email-preview-frame" src="./welcome.html" class="bg-white rounded-xl transition-all duration-300 w-[600px]" style="height: 600px; border: none;"></iframe>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 2: ONBOARDING VISUALS SHOWCASE -->
+    <section class="border-t border-slate-800 pt-16">
+      <div class="mb-10">
+        <div class="inline-block bg-brandBlue/10 text-brandBlue text-xs font-bold uppercase tracking-wider px-3 py-1 rounded-full mb-3">
+          Onboarding Graphics
+        </div>
+        <h2 class="text-2xl font-display font-bold text-white mb-2">Step-by-Step UI Illustrations</h2>
+        <p class="text-slate-400 max-w-3xl">These landscape PNG assets (800x500px) illustrate PostPilot's 3-step core wizard workflow. They are programmatically composited with matching dark gradients, checked checkmarks, and illustrative branding elements.</p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <!-- STEP 1 Visual card -->
+        <div class="bg-brandSlate/40 border border-slate-800/80 rounded-2xl overflow-hidden backdrop-blur-sm group hover:border-brandPink/30 transition-all duration-300">
+          <div class="relative overflow-hidden aspect-[8/5] border-b border-slate-800">
+            <img src="./onboarding/onboarding-step1.png" alt="Onboarding Step 1" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
+            <span class="absolute top-4 left-4 bg-brandPink text-white font-bold text-xs px-2.5 py-1 rounded-full">STEP 1</span>
+          </div>
+          <div class="p-6">
+            <h3 class="text-lg font-display font-bold text-white mb-2">1. Drop Your Spark</h3>
+            <p class="text-slate-400 text-sm mb-4">A simple text editor UI enabling users to copy-paste blog links or type rough seed thoughts instantly.</p>
+            <div class="text-slate-500 font-mono text-xs bg-slate-900/60 p-2 rounded-lg border border-slate-800/50 break-all select-all">
+              /brand/onboarding/onboarding-step1.png
+            </div>
+          </div>
+        </div>
+
+        <!-- STEP 2 Visual card -->
+        <div class="bg-brandSlate/40 border border-slate-800/80 rounded-2xl overflow-hidden backdrop-blur-sm group hover:border-brandBlue/30 transition-all duration-300">
+          <div class="relative overflow-hidden aspect-[8/5] border-b border-slate-800">
+            <img src="./onboarding/onboarding-step2.png" alt="Onboarding Step 2" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
+            <span class="absolute top-4 left-4 bg-brandBlue text-white font-bold text-xs px-2.5 py-1 rounded-full">STEP 2</span>
+          </div>
+          <div class="p-6">
+            <h3 class="text-lg font-display font-bold text-white mb-2">2. Co-Pilot Tuning</h3>
+            <p class="text-slate-400 text-sm mb-4">Visually depicts the paper airplane brand logo distributing optimized assets into IG, LI, and X channel nodes.</p>
+            <div class="text-slate-500 font-mono text-xs bg-slate-900/60 p-2 rounded-lg border border-slate-800/50 break-all select-all">
+              /brand/onboarding/onboarding-step2.png
+            </div>
+          </div>
+        </div>
+
+        <!-- STEP 3 Visual card -->
+        <div class="bg-brandSlate/40 border border-slate-800/80 rounded-2xl overflow-hidden backdrop-blur-sm group hover:border-brandIndigo/30 transition-all duration-300">
+          <div class="relative overflow-hidden aspect-[8/5] border-b border-slate-800">
+            <img src="./onboarding/onboarding-step3.png" alt="Onboarding Step 3" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
+            <span class="absolute top-4 left-4 bg-brandIndigo text-white font-bold text-xs px-2.5 py-1 rounded-full">STEP 3</span>
+          </div>
+          <div class="p-6">
+            <h3 class="text-lg font-display font-bold text-white mb-2">3. Publish & Scale</h3>
+            <p class="text-slate-400 text-sm mb-4">Displays an ascending bar-chart calendar graphic representing the user's social consistency growth trail.</p>
+            <div class="text-slate-500 font-mono text-xs bg-slate-900/60 p-2 rounded-lg border border-slate-800/50 break-all select-all">
+              /brand/onboarding/onboarding-step3.png
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="mt-20 border-t border-slate-800 pt-8 text-center text-sm text-slate-500 flex flex-col md:flex-row justify-between items-center gap-4">
+      <p>© 2026 PostPilot, Inc. Created by Designer agent with standard brand compliance.</p>
+      <div class="flex gap-4">
+        <a href="./../index.html" class="hover:text-white transition-colors">Guidelines Explorer</a>
+        <span>•</span>
+        <a href="./../landing.html" class="hover:text-white transition-colors">Landing Page</a>
+      </div>
+    </footer>
+
+  </div>
+
+  <!-- INTERACTIVE PLAYGROUND SCRIPT -->
+  <script>
+    let activeTemplate = 'welcome';
+    
+    const templates = {
+      'welcome': {
+        title: 'welcome.html',
+        url: './welcome.html',
+        color: 'border-brandPink bg-brandPink/10 text-white'
+      },
+      'weekly-digest': {
+        title: 'weekly-digest.html',
+        url: './weekly-digest.html',
+        color: 'border-brandBlue bg-brandBlue/10 text-white'
+      },
+      'upgrade-cta': {
+        title: 'upgrade-cta.html',
+        url: './upgrade-cta.html',
+        color: 'border-brandIndigo bg-brandIndigo/10 text-white'
+      },
+      'transactional-base': {
+        title: 'transactional-base.html',
+        url: './transactional-base.html',
+        color: 'border-slate-400 bg-slate-800/80 text-white'
+      }
+    };
+
+    function loadTemplate(key) {
+      activeTemplate = key;
+      const t = templates[key];
+      
+      // Update iframe source
+      const frame = document.getElementById('email-preview-frame');
+      frame.src = t.url;
+      
+      // Update label in header mock bar
+      document.getElementById('preview-title').textContent = t.title;
+      
+      // Reset button highlights
+      Object.keys(templates).forEach(k => {
+        const btn = document.getElementById('btn-' + k);
+        btn.className = "w-full text-left px-4 py-3 rounded-xl transition-all duration-200 flex items-center justify-between border border-transparent bg-slate-800/40 text-slate-300 hover:bg-slate-800/80 hover:text-white";
+        // hide specific checks
+        btn.querySelector('span').classList.add('hidden');
+      });
+
+      // Highlight selected button
+      const activeBtn = document.getElementById('btn-' + key);
+      activeBtn.className = "w-full text-left px-4 py-3 rounded-xl transition-all duration-200 flex items-center justify-between border " + t.color;
+      activeBtn.querySelector('span').classList.remove('hidden');
+    }
+
+    function setViewport(size) {
+      const frame = document.getElementById('email-preview-frame');
+      const btnD = document.getElementById('vp-desktop');
+      const btnM = document.getElementById('vp-mobile');
+      
+      if (size === 'desktop') {
+        frame.className = "bg-white rounded-xl transition-all duration-300 w-[600px]";
+        btnD.className = "px-3 py-1.5 rounded-md font-bold transition-all bg-slate-700 text-white shadow-sm";
+        btnM.className = "px-3 py-1.5 rounded-md font-bold transition-all text-slate-400 hover:text-white";
+      } else {
+        frame.className = "bg-white rounded-xl transition-all duration-300 w-[375px]";
+        btnD.className = "px-3 py-1.5 rounded-md font-bold transition-all text-slate-400 hover:text-white";
+        btnM.className = "px-3 py-1.5 rounded-md font-bold transition-all bg-slate-700 text-white shadow-sm";
+      }
+    }
+
+    async function copySourceCode() {
+      try {
+        const response = await fetch(templates[activeTemplate].url);
+        const code = await response.text();
+        await navigator.clipboard.writeText(code);
+        alert("Success! Raw responsive HTML code for '" + templates[activeTemplate].title + "' copied to clipboard.");
+      } catch (err) {
+        alert("Failed to copy source code: " + err);
+      }
+    }
+
+    function openRawWindow() {
+      window.open(templates[activeTemplate].url, '_blank');
+    }
+
+    // Initial load
+    document.addEventListener("DOMContentLoaded", () => {
+      loadTemplate('welcome');
+    });
+  </script>
+
+</body>
+</html>
