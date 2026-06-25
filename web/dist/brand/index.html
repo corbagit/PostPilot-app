@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PostPilot — Brand Identity & Design System</title>
+  
+  <!-- Open Graph / SEO Meta Tags -->
+  <meta property="og:title" content="PostPilot — Brand Identity & Design System">
+  <meta property="og:description" content="Official brand guidelines, vector logos, color palette design tokens, typography scales, and UI component standards for PostPilot.">
+  <meta property="og:image" content="./og-image.png">
+  <meta property="og:type" content="website">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="PostPilot — Brand Identity & Design System">
+  <meta name="twitter:description" content="Official brand guidelines, vector logos, color palette design tokens, typography scales, and UI component standards for PostPilot.">
+  <meta name="twitter:image" content="./og-image.png">
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Custom Brand Stylesheet -->
+  <link rel="stylesheet" href="./brand.css">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+            display: ['Plus Jakarta Sans', 'sans-serif'],
+            mono: ['Fira Code', 'monospace']
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    .glass {
+      background: rgba(255, 255, 255, 0.75);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+    }
+    .grid-bg {
+      background-image: radial-gradient(#e2e8f0 1.5px, transparent 1.5px);
+      background-size: 24px 24px;
+    }
+    .tab-active {
+      border-color: #3B82F6;
+      color: #3B82F6;
+    }
+  </style>
+</head>
+<body class="bg-[#F8FAFC] text-[#0F172A] font-sans antialiased">
+
+  <!-- Navbar -->
+  <header class="sticky top-0 z-50 w-full border-b border-slate-200 glass">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+      <div class="flex items-center gap-3">
+        <img src="./logo-full.svg" alt="PostPilot Full Logo" class="h-10 w-auto">
+      </div>
+      <nav class="hidden md:flex items-center gap-8 font-display font-semibold text-sm">
+        <a href="#identity" class="text-slate-600 hover:text-blue-600 transition">Brand Identity</a>
+        <a href="#logos" class="text-slate-600 hover:text-blue-600 transition">Logos</a>
+        <a href="#colors" class="text-slate-600 hover:text-blue-600 transition">Color Palette</a>
+        <a href="#typography" class="text-slate-600 hover:text-blue-600 transition">Typography</a>
+        <a href="#components" class="text-slate-600 hover:text-blue-600 transition">UI Components</a>
+        <a href="./landing.html" class="px-4 py-2 rounded-lg bg-blue-50 text-blue-600 hover:bg-blue-100 transition flex items-center gap-2">
+          <span>Landing Mockup</span>
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+        </a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="relative py-20 px-4 sm:px-6 lg:px-8 bg-white border-b border-slate-200 grid-bg overflow-hidden">
+    <div class="max-w-7xl mx-auto relative z-10 flex flex-col md:flex-row items-center gap-12">
+      <div class="flex-1 text-left space-y-6">
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-50 text-blue-600 border border-blue-100 font-semibold text-xs tracking-wide uppercase">
+          <span class="w-2 h-2 rounded-full bg-blue-500 animate-pulse"></span>
+          PostPilot Design System v1.0
+        </div>
+        <h1 class="text-5xl md:text-6xl font-display font-extrabold tracking-tight text-slate-900 leading-none">
+          One raw idea,<br>
+          <span class="bg-gradient-to-r from-blue-600 via-indigo-600 to-pink-500 bg-clip-text text-transparent">a week's worth of content.</span>
+        </h1>
+        <p class="text-lg text-slate-600 max-w-xl">
+          This document serves as the single source of truth for the PostPilot brand identity, design variables, assets, and component standards. Built to empower developers and content strategists to create cohesive, premium experiences.
+        </p>
+        <div class="flex flex-wrap items-center gap-4">
+          <a href="#logos" class="btn btn-primary">Explore Assets</a>
+          <a href="./landing.html" class="btn btn-secondary">Preview Landing Page</a>
+        </div>
+      </div>
+      <div class="flex-1 w-full max-w-md md:max-w-none">
+        <div class="relative p-2 bg-slate-900 rounded-2xl shadow-2xl border border-slate-800">
+          <div class="absolute inset-0 bg-gradient-to-r from-blue-500 to-indigo-500 rounded-2xl filter blur-3xl opacity-15 -z-10"></div>
+          <img src="./hero-illustration.png" alt="SaaS Illustration" class="rounded-xl w-full h-auto">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Identity & Core Values -->
+  <section id="identity" class="py-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 border-b border-slate-200">
+    <div class="text-center max-w-3xl mx-auto mb-16 space-y-4">
+      <h2 class="text-3xl md:text-4xl font-display font-bold text-slate-900">Brand Vision & Strategy</h2>
+      <p class="text-slate-600">PostPilot bridges the gap between chaotic content creation and streamlined, consistent automated brand storytelling.</p>
+    </div>
+    
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+      <div class="bg-white p-8 rounded-xl border border-slate-200 shadow-sm space-y-4">
+        <div class="w-12 h-12 rounded-lg bg-blue-50 flex items-center justify-center text-blue-600">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+        </div>
+        <h3 class="text-xl font-display font-bold text-slate-950">1. Core Value Proposition</h3>
+        <p class="text-slate-600 text-sm leading-relaxed">
+          Transforms one raw text thought into platform-optimized, high-converting social media posts (caption, hashtags, and customized graphics) for Instagram, LinkedIn, and Twitter/X in seconds.
+        </p>
+      </div>
+
+      <div class="bg-white p-8 rounded-xl border border-slate-200 shadow-sm space-y-4">
+        <div class="w-12 h-12 rounded-lg bg-indigo-50 flex items-center justify-center text-indigo-600">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"/></svg>
+        </div>
+        <h3 class="text-xl font-display font-bold text-slate-950">2. Target Audience</h3>
+        <p class="text-slate-600 text-sm leading-relaxed">
+          Solo creators, consultant/coaches (1-5 person squads) wanting to maintain consistent, high-value social presences, plus local boutiques/service businesses looking to scale.
+        </p>
+      </div>
+
+      <div class="bg-white p-8 rounded-xl border border-slate-200 shadow-sm space-y-4">
+        <div class="w-12 h-12 rounded-lg bg-pink-50 flex items-center justify-center text-pink-600">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/></svg>
+        </div>
+        <h3 class="text-xl font-display font-bold text-slate-950">3. Star Business KPIs</h3>
+        <p class="text-slate-600 text-sm leading-relaxed">
+          Monthly Recurring Revenue (MRR), Active Subscriber Ratio (at least 1 post scheduled in the last 14 days), Net Churn Rate &lt; 5%, and average posts generated per user.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Official Logo Asset Portal -->
+  <section id="logos" class="py-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 border-b border-slate-200">
+    <div class="text-center max-w-3xl mx-auto mb-16 space-y-4">
+      <h2 class="text-3xl md:text-4xl font-display font-bold text-slate-900">Brand Logo Directory</h2>
+      <p class="text-slate-600">Downloadable vector formats optimized for light themes, dark themes, and icon-only layouts.</p>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+      <!-- Logo Icon Only -->
+      <div class="bg-white rounded-xl border border-slate-200 overflow-hidden shadow-sm flex flex-col">
+        <div class="p-8 h-48 bg-slate-50 flex items-center justify-center border-b border-slate-200">
+          <img src="./logo-icon.svg" class="h-24 w-auto hover:scale-110 transition duration-300" alt="PostPilot Logo Icon">
+        </div>
+        <div class="p-6 space-y-4 flex-1 flex flex-col justify-between">
+          <div>
+            <h3 class="text-lg font-display font-bold text-slate-900">Logo Icon Only</h3>
+            <p class="text-slate-600 text-sm mt-1">Minimalist vector icon. Best for mobile app home screens, browser tab favicons, and avatar profiles.</p>
+          </div>
+          <div class="flex gap-3">
+            <a href="./logo-icon.svg" download class="w-full text-center px-4 py-2 text-xs font-semibold rounded-lg bg-blue-50 text-blue-600 hover:bg-blue-100 transition">Download SVG</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Full Logo (Light Theme) -->
+      <div class="bg-white rounded-xl border border-slate-200 overflow-hidden shadow-sm flex flex-col">
+        <div class="p-8 h-48 bg-slate-50 flex items-center justify-center border-b border-slate-200">
+          <img src="./logo-full.svg" class="h-16 w-auto" alt="PostPilot Full Light Logo">
+        </div>
+        <div class="p-6 space-y-4 flex-1 flex flex-col justify-between">
+          <div>
+            <h3 class="text-lg font-display font-bold text-slate-900">Primary Logo (Light Theme)</h3>
+            <p class="text-slate-600 text-sm mt-1">The default primary brand mark. To be rendered on clear white or ice light backgrounds.</p>
+          </div>
+          <div class="flex gap-3">
+            <a href="./logo-full.svg" download class="w-full text-center px-4 py-2 text-xs font-semibold rounded-lg bg-blue-50 text-blue-600 hover:bg-blue-100 transition">Download SVG</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Full Logo (Dark Theme) -->
+      <div class="bg-white rounded-xl border border-slate-200 overflow-hidden shadow-sm flex flex-col">
+        <div class="p-8 h-48 bg-slate-950 flex items-center justify-center border-b border-slate-900">
+          <img src="./logo-white.svg" class="h-16 w-auto" alt="PostPilot Full Dark Logo">
+        </div>
+        <div class="p-6 space-y-4 flex-1 flex flex-col justify-between">
+          <div>
+            <h3 class="text-lg font-display font-bold text-slate-900">Inverted Logo (Dark Theme)</h3>
+            <p class="text-slate-600 text-sm mt-1">Luminous text and high-contrast gradients designed explicitly for dark backgrounds and dashboard headers.</p>
+          </div>
+          <div class="flex gap-3">
+            <a href="./logo-white.svg" download class="w-full text-center px-4 py-2 text-xs font-semibold rounded-lg bg-blue-50 text-blue-600 hover:bg-blue-100 transition">Download SVG</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Color Palette -->
+  <section id="colors" class="py-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 border-b border-slate-200">
+    <div class="text-center max-w-3xl mx-auto mb-16 space-y-4">
+      <h2 class="text-3xl md:text-4xl font-display font-bold text-slate-900">Official Color Palette</h2>
+      <p class="text-slate-600">Carefully structured colors matching the Tailwind system and the PostPilot CSS design tokens.</p>
+    </div>
+
+    <!-- Primary Swatches -->
+    <h3 class="text-xl font-display font-bold mb-6 text-slate-800 flex items-center gap-2">
+      <span class="w-1.5 h-6 rounded bg-blue-600"></span> Primary & Accent Colors
+    </h3>
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
+      <!-- Electric Blue -->
+      <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm space-y-4">
+        <div class="h-28 rounded-lg bg-[#3B82F6]"></div>
+        <div>
+          <h4 class="font-semibold text-slate-900 text-sm">Electric Blue</h4>
+          <p class="text-slate-500 text-xs mt-1">Main CTAs, Brand Core</p>
+          <div class="mt-3 space-y-1.5 font-mono text-xs text-slate-600">
+            <div class="flex justify-between"><span>HEX:</span><span class="font-semibold">#3B82F6</span></div>
+            <div class="flex justify-between"><span>CSS Var:</span><span>--brand-primary</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Violet Indigo -->
+      <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm space-y-4">
+        <div class="h-28 rounded-lg bg-[#6366F1]"></div>
+        <div>
+          <h4 class="font-semibold text-slate-900 text-sm">Violet Indigo</h4>
+          <p class="text-slate-500 text-xs mt-1">Secondary brand, highlights</p>
+          <div class="mt-3 space-y-1.5 font-mono text-xs text-slate-600">
+            <div class="flex justify-between"><span>HEX:</span><span class="font-semibold">#6366F1</span></div>
+            <div class="flex justify-between"><span>CSS Var:</span><span>--brand-secondary</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Royal Purple -->
+      <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm space-y-4">
+        <div class="h-28 rounded-lg bg-[#8B5CF6]"></div>
+        <div>
+          <h4 class="font-semibold text-slate-900 text-sm">Royal Purple</h4>
+          <p class="text-slate-500 text-xs mt-1">AI automation highlights</p>
+          <div class="mt-3 space-y-1.5 font-mono text-xs text-slate-600">
+            <div class="flex justify-between"><span>HEX:</span><span class="font-semibold">#8B5CF6</span></div>
+            <div class="flex justify-between"><span>CSS Var:</span><span>--brand-accent-purple</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Vibrant Pink -->
+      <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm space-y-4">
+        <div class="h-28 rounded-lg bg-[#EC4899]"></div>
+        <div>
+          <h4 class="font-semibold text-slate-900 text-sm">Vibrant Pink</h4>
+          <p class="text-slate-500 text-xs mt-1">Engagement, creators</p>
+          <div class="mt-3 space-y-1.5 font-mono text-xs text-slate-600">
+            <div class="flex justify-between"><span>HEX:</span><span class="font-semibold">#EC4899</span></div>
+            <div class="flex justify-between"><span>CSS Var:</span><span>--brand-accent</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- UI & Neutral Swatches -->
+    <h3 class="text-xl font-display font-bold mb-6 text-slate-800 flex items-center gap-2">
+      <span class="w-1.5 h-6 rounded bg-slate-600"></span> Neutrals & Backgrounds
+    </h3>
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+      <!-- Deep Slate Dark Theme -->
+      <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm space-y-4">
+        <div class="h-28 rounded-lg bg-[#0F172A] border border-slate-800"></div>
+        <div>
+          <h4 class="font-semibold text-slate-900 text-sm">Deep Slate</h4>
+          <p class="text-slate-500 text-xs mt-1">Dark theme backdrop, text primary</p>
+          <div class="mt-3 space-y-1.5 font-mono text-xs text-slate-600">
+            <div class="flex justify-between"><span>HEX:</span><span class="font-semibold">#0F172A</span></div>
+            <div class="flex justify-between"><span>CSS Var:</span><span>--dark-bg</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Cool Card Slate -->
+      <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm space-y-4">
+        <div class="h-28 rounded-lg bg-[#1E293B]"></div>
+        <div>
+          <h4 class="font-semibold text-slate-900 text-sm">Card Slate</h4>
+          <p class="text-slate-500 text-xs mt-1">Dark dashboard components</p>
+          <div class="mt-3 space-y-1.5 font-mono text-xs text-slate-600">
+            <div class="flex justify-between"><span>HEX:</span><span class="font-semibold">#1E293B</span></div>
+            <div class="flex justify-between"><span>CSS Var:</span><span>--dark-bg-card</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Soft Ice Blue -->
+      <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm space-y-4">
+        <div class="h-28 rounded-lg bg-[#F8FAFC] border border-slate-100"></div>
+        <div>
+          <h4 class="font-semibold text-slate-900 text-sm">Ice Blue</h4>
+          <p class="text-slate-500 text-xs mt-1">Light theme backdrop</p>
+          <div class="mt-3 space-y-1.5 font-mono text-xs text-slate-600">
+            <div class="flex justify-between"><span>HEX:</span><span class="font-semibold">#F8FAFC</span></div>
+            <div class="flex justify-between"><span>CSS Var:</span><span>--light-bg</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Pure Light White -->
+      <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm space-y-4">
+        <div class="h-28 rounded-lg bg-[#FFFFFF] border border-slate-200"></div>
+        <div>
+          <h4 class="font-semibold text-slate-900 text-sm">Pure White</h4>
+          <p class="text-slate-500 text-xs mt-1">Light layout containers</p>
+          <div class="mt-3 space-y-1.5 font-mono text-xs text-slate-600">
+            <div class="flex justify-between"><span>HEX:</span><span class="font-semibold">#FFFFFF</span></div>
+            <div class="flex justify-between"><span>CSS Var:</span><span>--light-bg-card</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Typography Section -->
+  <section id="typography" class="py-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 border-b border-slate-200">
+    <div class="text-center max-w-3xl mx-auto mb-16 space-y-4">
+      <h2 class="text-3xl md:text-4xl font-display font-bold text-slate-900">Typography Hierarchy</h2>
+      <p class="text-slate-600">We utilize a display font for headlines and structural tags, combined with a highly legible sans-serif font for text blocks and dashboard values.</p>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
+      <!-- Headings / Display -->
+      <div class="bg-white p-8 rounded-xl border border-slate-200 shadow-sm space-y-6">
+        <div class="flex items-center gap-3 border-b border-slate-100 pb-4">
+          <span class="px-2.5 py-1 rounded bg-indigo-50 text-indigo-600 text-xs font-semibold">Headings & Titles</span>
+          <span class="text-slate-500 font-display font-bold text-sm">Plus Jakarta Sans</span>
+        </div>
+        
+        <div class="space-y-4">
+          <div>
+            <span class="text-xs text-slate-400">Heading 1 (Extrabold Display)</span>
+            <h1 class="text-4xl font-display font-extrabold tracking-tight mt-1">Optimize Social</h1>
+          </div>
+          <div>
+            <span class="text-xs text-slate-400">Heading 2 (Bold H2)</span>
+            <h2 class="text-2xl font-display font-bold mt-1">One Idea. Automated.</h2>
+          </div>
+          <div>
+            <span class="text-xs text-slate-400">Heading 3 (Semibold H3)</span>
+            <h3 class="text-lg font-display font-semibold mt-1">Dashboard Panel Content</h3>
+          </div>
+        </div>
+      </div>
+
+      <!-- Body / Mono -->
+      <div class="bg-white p-8 rounded-xl border border-slate-200 shadow-sm space-y-6">
+        <div class="flex items-center gap-3 border-b border-slate-100 pb-4">
+          <span class="px-2.5 py-1 rounded bg-emerald-50 text-emerald-600 text-xs font-semibold">Body Copy & Mono</span>
+          <span class="text-slate-500 font-semibold text-sm">Inter & Fira Code</span>
+        </div>
+
+        <div class="space-y-4">
+          <div>
+            <span class="text-xs text-slate-400">Paragraph (Regular / Height Normal)</span>
+            <p class="text-sm text-slate-600 leading-relaxed mt-1">
+              Save 5+ hours per week with automated social calendars. Easily generate optimized, tailored captions for LinkedIn, Twitter, and Instagram with high performance hashtag predictions.
+            </p>
+          </div>
+          <div>
+            <span class="text-xs text-slate-400">Data / Code (Fira Code Mono)</span>
+            <div class="bg-slate-900 text-slate-200 p-3 rounded-lg text-xs font-mono mt-1 leading-normal overflow-x-auto">
+              const brand = { name: "PostPilot", tier: "Pro", limit: 30 };
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Live UI Components Explorer -->
+  <section id="components" class="py-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="text-center max-w-3xl mx-auto mb-16 space-y-4">
+      <h2 class="text-3xl md:text-4xl font-display font-bold text-slate-900">Standard Design Components</h2>
+      <p class="text-slate-600">Interactive previews of core platform assets for developers to drop straight into dashboard interfaces.</p>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
+      <!-- Button Elements Preview -->
+      <div class="bg-white p-8 rounded-xl border border-slate-200 shadow-sm space-y-6">
+        <h3 class="text-lg font-display font-bold border-b border-slate-100 pb-3 text-slate-800">Button Triggers</h3>
+        <div class="flex flex-col gap-4">
+          <div class="flex flex-wrap items-center gap-4">
+            <button class="btn btn-primary">Primary CTA</button>
+            <span class="text-xs text-slate-500 font-mono">class="btn btn-primary"</span>
+          </div>
+          <div class="flex flex-wrap items-center gap-4">
+            <button class="btn btn-secondary">Secondary Link</button>
+            <span class="text-xs text-slate-500 font-mono">class="btn btn-secondary"</span>
+          </div>
+          <div class="flex flex-wrap items-center gap-4">
+            <button class="btn btn-dark">Dark Board Option</button>
+            <span class="text-xs text-slate-500 font-mono">class="btn btn-dark"</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Dashboard Elements Preview (Card Styles) -->
+      <div class="space-y-6">
+        <!-- Light Theme Card -->
+        <div class="brand-card space-y-3">
+          <div class="flex items-center justify-between">
+            <div class="flex items-center gap-2">
+              <span class="w-3 h-3 rounded-full bg-emerald-500"></span>
+              <span class="font-semibold text-xs text-slate-500 uppercase tracking-wider">Campaign Active</span>
+            </div>
+            <span class="text-xs font-semibold text-slate-400">v1.0</span>
+          </div>
+          <h4 class="text-xl font-display font-bold text-slate-950">Instagram Weekly Strategy</h4>
+          <p class="text-slate-600 text-sm">One text idea was mapped to 5 posts. First post is scheduled for Monday 10:00 AM.</p>
+        </div>
+
+        <!-- Dark Theme Card (North Star Dashboard style!) -->
+        <div class="brand-card-dark space-y-4">
+          <div class="flex items-center justify-between">
+            <div class="flex items-center gap-2">
+              <span class="w-3 h-3 rounded-full bg-[#EC4899] animate-pulse"></span>
+              <span class="font-semibold text-xs text-slate-400 uppercase tracking-wider">AI Generation Mode</span>
+            </div>
+            <span class="text-xs text-slate-500">PostPilot Core</span>
+          </div>
+          <div>
+            <h4 class="text-xl font-display font-bold text-slate-100">Starter Campaign Dashboard</h4>
+            <p class="text-slate-400 text-sm mt-1">Fully responsive widgets built leveraging standard CSS tokens and custom background blurs.</p>
+          </div>
+          <div class="flex items-center gap-4 pt-2">
+            <div class="px-3 py-1.5 rounded-lg bg-slate-800 border border-slate-700 text-slate-300 font-semibold text-xs">
+              Twitter Queue: 5 posts
+            </div>
+            <div class="px-3 py-1.5 rounded-lg bg-slate-800 border border-slate-700 text-slate-300 font-semibold text-xs">
+              LinkedIn: 3 posts
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="bg-slate-900 border-t border-slate-800 text-slate-400 py-12 px-4 sm:px-6 lg:px-8">
+    <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6">
+      <div class="flex items-center gap-3">
+        <img src="./logo-white.svg" alt="PostPilot Inverted Logo" class="h-8 w-auto">
+      </div>
+      <p class="text-sm">
+        &copy; 2024 PostPilot. All rights reserved. Created with absolute precision by team Designer.
+      </p>
+    </div>
+  </footer>
+
+</body>
+</html>
