@@ -29,8 +29,12 @@ app.use('/api/paypal/webhook', express.raw({ type: 'application/json' }));
 // JSON body parser for all other routes
 app.use(express.json());
 
-// ── Serve Brand Assets ────────────────────────────────
-const brandPath = path.join(__dirname, '..', '..', 'web', 'public', 'brand');
+// ── Serve Frontend & Brand Assets ─────────────────────
+const publicPath = path.join(__dirname, '..', 'public');
+app.use(express.static(publicPath));
+
+// Also serve brand from public/brand for /brand/* paths
+const brandPath = path.join(publicPath, 'brand');
 app.use('/brand', express.static(brandPath));
 
 // ── API Routes ─────────────────────────────────────────
@@ -49,21 +53,18 @@ app.get('/api/health', (req, res) => {
   });
 });
 
-// ── Serve Frontend (if built) ─────────────────────────
-const frontendDist = path.join(__dirname, '..', '..', 'web', 'dist');
-app.use(express.static(frontendDist));
-
-// SPA fallback — serve index.html for non-API routes
+// ── SPA Fallback ────────────────────────────────────
 app.get('*', (req, res) => {
   if (req.path.startsWith('/api/')) {
     return res.status(404).json({ error: 'API endpoint not found' });
   }
-  res.sendFile(path.join(frontendDist, 'index.html'), (err) => {
+  const indexPath = path.join(publicPath, 'index.html');
+  res.sendFile(indexPath, (err) => {
     if (err) {
       res.status(200).json({
         message: 'PostPilot API is running',
         docs: '/api/health',
-        note: 'Frontend not built yet — run the web frontend separately or build it with `npm run build` in the web directory.'
+        note: 'Frontend not built yet'
       });
     }
   });
