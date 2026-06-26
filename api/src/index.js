@@ -2,6 +2,7 @@ import 'dotenv/config';
 import express from 'express';
 import cors from 'cors';
 import path from 'path';
+import fs from 'fs';
 import { fileURLToPath } from 'url';
 import { getDb, closeDb } from './db/connection.js';
 import { runMigrations } from './db/migrate.js';
@@ -30,7 +31,17 @@ app.use('/api/paypal/webhook', express.raw({ type: 'application/json' }));
 app.use(express.json());
 
 // ── Serve Frontend & Brand Assets ─────────────────────
-const publicPath = path.join(__dirname, '..', 'public');
+// Try multiple possible public paths (Railway deploys differently)
+const possiblePaths = [
+  path.join(__dirname, '..', 'public'),
+  path.join(process.cwd(), 'public'),
+  path.join(__dirname, '..', '..', 'web', 'dist'),
+  path.join(process.cwd(), '..', 'web', 'dist'),
+];
+const publicPath = possiblePaths.find(p => {
+  try { return fs.existsSync(path.join(p, 'index.html')); }
+  catch { return false; }
+}) || possiblePaths[0];
 app.use(express.static(publicPath));
 
 // Also serve brand from public/brand for /brand/* paths
@@ -49,7 +60,12 @@ app.get('/api/health', (req, res) => {
     status: 'ok',
     service: 'PostPilot API',
     version: '1.0.0',
-    timestamp: new Date().toISOString()
+    timestamp: new Date().toISOString(),
+    paths: {
+      public: publicPath,
+      cwd: process.cwd(),
+      dirname: __dirname
+    }
   });
 });
 
