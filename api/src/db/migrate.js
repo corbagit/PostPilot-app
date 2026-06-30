@@ -75,6 +75,22 @@ const MIGRATIONS = [
       ALTER TABLE subscriptions ADD COLUMN paypal_subscription_id TEXT;
       ALTER TABLE subscriptions ADD COLUMN payment_provider TEXT DEFAULT 'stripe' CHECK(payment_provider IN ('stripe', 'paypal'));
     `
+  },
+  {
+    version: 3,
+    name: 'add_pageviews',
+    sql: `
+      CREATE TABLE IF NOT EXISTS pageviews (
+        id TEXT PRIMARY KEY,
+        user_id TEXT NOT NULL,
+        page TEXT NOT NULL,
+        referrer TEXT,
+        created_at TEXT DEFAULT (datetime('now')),
+        FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
+      );
+      CREATE INDEX IF NOT EXISTS idx_pageviews_user_id ON pageviews(user_id);
+      CREATE INDEX IF NOT EXISTS idx_pageviews_created_at ON pageviews(created_at);
+    `
   }
 ];
 

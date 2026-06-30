@@ -9,6 +9,8 @@ import authRoutes from './routes/auth.js';
 import postRoutes from './routes/posts.js';
 import billingRoutes from './routes/billing.js';
 import paypalRoutes from './routes/paypal.js';
+import analyticsRoutes from './routes/analytics.js';
+import adminRoutes from './routes/admin.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const PORT = parseInt(process.env.PORT || '3000', 10);
@@ -42,6 +44,9 @@ app.use('/api/auth', authRoutes);
 app.use('/api/posts', postRoutes);
 app.use('/api/billing', billingRoutes);
 app.use('/api/paypal', paypalRoutes);
+app.use('/api/analytics', analyticsRoutes);
+app.use('/api/admin', adminRoutes);
+app.use('/api/analytics', adminRoutes); // Also mount for pageview endpoint
 
 // Health check
 app.get('/api/health', (req, res) => {
