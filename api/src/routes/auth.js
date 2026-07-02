@@ -3,6 +3,7 @@ import bcrypt from 'bcryptjs';
 import { v4 as uuidv4 } from 'uuid';
 import { getDb } from '../db/connection.js';
 import { authMiddleware, generateToken } from '../middleware/auth.js';
+import { sendWelcomeEmail } from '../services/email.js';
 
 const router = Router();
 
@@ -37,6 +38,11 @@ router.post('/signup', async (req, res) => {
     const user = db.prepare('SELECT id, email, name, subscription_tier, subscription_status, created_at FROM users WHERE id = ?').get(id);
 
     const token = generateToken(user);
+
+    // Send welcome email (non-blocking)
+    sendWelcomeEmail(email, name).catch(err => {
+      console.error('[auth] Welcome email error:', err);
+    });
 
     res.status(201).json({
       user,
@@ -127,3 +133,4 @@ router.put('/profile', authMiddleware, (req, res) => {
 });
 
 export default router;
+
