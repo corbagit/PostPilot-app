@@ -3,6 +3,7 @@ import bcrypt from 'bcryptjs';
 import { v4 as uuidv4 } from 'uuid';
 import { getDb } from '../db/connection.js';
 import { authMiddleware, generateToken } from '../middleware/auth.js';
+import { sendWelcomeEmail } from '../services/email.js';
 
 const router = Router();
 
@@ -37,6 +38,11 @@ router.post('/signup', async (req, res) => {
     const user = db.prepare('SELECT id, email, name, subscription_tier, subscription_status, created_at FROM users WHERE id = ?').get(id);
 
     const token = generateToken(user);
+
+    // Send welcome email (non-blocking)
+    sendWelcomeEmail(email, name).catch(err => {
+      console.error('[auth] Welcome email error:', err);
+    });
 
     res.status(201).json({
       user,
@@ -126,4 +132,28 @@ router.put('/profile', authMiddleware, (req, res) => {
   res.json({ user });
 });
 
+// POST /api/auth/test-email
+// Test endpoint to send a test email (development only)
+router.post('/test-email', async (req, res) => {
+  try {
+    const { email, name } = req.body;
+
+    if (!email) {
+      return res.status(400).json({ error: 'Email is required' });
+    }
+
+    const success = await sendWelcomeEmail(email, name || 'Test User');
+
+    if (success) {
+      res.json({ message: 'Test email sent successfully', email });
+    } else {
+      res.status(500).json({ error: 'Failed to send test email. Check SMTP configuration.' });
+    }
+  } catch (err) {
+    console.error('[auth] Test email error:', err);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
 export default router;
+
