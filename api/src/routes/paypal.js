@@ -4,7 +4,8 @@
  * Endpoints:
  *   POST /api/paypal/create-subscription   — Create PayPal subscription, returns approval URL
  *   POST /api/paypal/capture               — Capture / activate after user approval
- *   POST /api/paypal/webhook               — Receive PayPal webhook events
+ *   POST /api/paypal/ipn                   — Receive PayPal IPN (Instant Payment Notification)
+ *   POST /api/paypal/webhook               — Receive PayPal webhook events (legacy)
  *   GET  /api/paypal/subscription/:id      — Get subscription details
  *
  * All subscription plans integrate with the same usage limits
@@ -16,6 +17,8 @@ import { v4 as uuidv4 } from 'uuid';
 import { getDb } from '../db/connection.js';
 import { authMiddleware } from '../middleware/auth.js';
 import * as paypalService from '../services/paypal.js';
+import * as ipnService from '../services/paypal-ipn.js';
+import querystring from 'querystring';
 
 const router = Router();
 
@@ -50,6 +53,204 @@ router.get('/subscription/:id', async (req, res) => {
     ).get(req.params.id, `paypal_${req.params.id}`);
     if (sub) return res.json({ subscription: sub, mode: 'mock' });
     res.status(500).json({ error: 'Failed to get subscription', detail: err.message });
+  }
+});
+
+// ── IPN Endpoint (Most Common Implementation) ────────
+
+/**
+ * POST /api/paypal/ipn
+ * Receive and process PayPal Instant Payment Notifications
+ * 
+ * Usage:
+ * 1. Configure in PayPal Dashboard:
+ *    - Account Settings → Instant Payment Notifications (IPN)
+ *    - Set Notification URL to: https://your-domain.com/api/paypal/ipn
+ * 
+ * 2. PayPal will POST form-encoded data to this endpoint
+ * 
+ * 3. Handler verifies authenticity and processes payment events
+ */
+router.post('/ipn', async (req, res) => {
+  try {
+    // PayPal sends IPN as raw form data
+    let rawBody = '';
+
+    req.on('data', (chunk) => {
+      rawBody += chunk.toString();
+    });
+
+    req.on('end', async () => {
+      try {
+        // Verify the IPN signature with PayPal
+        const isValid = await ipnService.verifyIPNSignature(rawBody);
+
+        if (!isValid) {
+          console.error('[paypal-ipn] Invalid IPN signature');
+          // Always return 200 to acknowledge, but log the error
+          return res.status(200).json({ received: true, verified: false });
+        }
+
+        // Parse the IPN data
+        const ipnData = ipnService.parseIPNData(rawBody);
+
+        // Process the event
+        const result = await ipnService.processIPNEvent(ipnData);
+
+        console.log('[paypal-ipn] Event processed successfully:', result);
+
+        // Always return 200 OK to acknowledge receipt
+        res.status(200).json({ received: true, verified: true });
+      } catch (err) {
+        console.error('[paypal-ipn] Error processing IPN:', err);
+        // Still return 200 to acknowledge, PayPal will retry if we return error
+        res.status(200).json({ received: true, error: err.message });
+      }
+    });
+  } catch (err) {
+    console.error('[paypal-ipn] IPN endpoint error:', err);
+    res.status(200).json({ received: true });
+  }
+});
+
+// Get IPN logs (admin endpoint for debugging)
+router.get('/ipn-logs', async (req, res) => {
+  try {
+    const logs = ipnService.getIPNLogs(50);
+    res.json({ logs });
+  } catch (err) {
+    console.error('[paypal] Get IPN logs error:', err);
+    res.status(500).json({ error: 'Failed to get logs' });
+  }
+});
+
+// ── Webhook Endpoint (Webhook API - Legacy) ────────
+
+/**
+ * POST /api/paypal/webhook
+ * Alternative: PayPal Webhooks API (newer than IPN)
+ * Uses JSON format instead of form-encoded
+ */
+router.post('/webhook', async (req, res) => {
+  try {
+    // Verify webhook signature if configured
+    if (paypalService.isPaypalConfigured()) {
+      const isValid = await paypalService.verifyWebhookSignature(
+        req.headers,
+        req.body
+      );
+      if (!isValid) {
+        console.error('[paypal] Webhook signature verification failed');
+        return res.status(401).json({ error: 'Invalid signature' });
+      }
+    }
+
+    const eventType = req.body?.event_type;
+    const resource = req.body?.resource;
+
+    console.log(`[paypal] Webhook received: ${eventType}`);
+
+    if (!eventType || !resource) {
+      return res.status(200).json({ received: true });
+    }
+
+    const db = getDb();
+
+    switch (eventType) {
+      case 'PAYMENT.SALE.COMPLETED': {
+        // Subscription payment received — extend period
+        const billingAgreementId = resource.billing_agreement_id;
+        if (billingAgreementId) {
+          const sub = db.prepare(
+            "SELECT * FROM subscriptions WHERE paypal_subscription_id = ?"
+          ).get(billingAgreementId);
+
+          if (sub) {
+            const now = new Date();
+            const endDate = new Date(now);
+            endDate.setMonth(endDate.getMonth() + 1);
+
+            db.prepare(`
+              UPDATE subscriptions SET status = 'active', current_period_end = ?, updated_at = datetime('now')
+              WHERE id = ?
+            `).run(endDate.toISOString(), sub.id);
+
+            db.prepare("UPDATE users SET subscription_status = 'active', updated_at = datetime('now') WHERE id = ?")
+              .run(sub.user_id);
+          }
+        }
+        break;
+      }
+
+      case 'BILLING.SUBSCRIPTION.CANCELLED': {
+        const subId = resource.id;
+        if (subId) {
+          const sub = db.prepare(
+            "SELECT * FROM subscriptions WHERE paypal_subscription_id = ?"
+          ).get(subId);
+
+          if (sub) {
+            db.prepare(`
+              UPDATE subscriptions SET status = 'canceled', cancel_at_period_end = 1, updated_at = datetime('now')
+              WHERE id = ?
+            `).run(sub.id);
+
+            db.prepare("UPDATE users SET subscription_tier = 'free', subscription_status = 'inactive', updated_at = datetime('now') WHERE id = ?")
+              .run(sub.user_id);
+          }
+        }
+        break;
+      }
+
+      case 'BILLING.SUBSCRIPTION.ACTIVATED': {
+        const activatedId = resource.id;
+        if (activatedId) {
+          const sub = db.prepare(
+            "SELECT * FROM subscriptions WHERE paypal_subscription_id = ?"
+          ).get(activatedId);
+
+          if (sub) {
+            const now = new Date();
+            const endDate = new Date(now);
+            endDate.setMonth(endDate.getMonth() + 1);
+
+            db.prepare(`
+              UPDATE subscriptions SET status = 'active', current_period_start = ?, current_period_end = ?, updated_at = datetime('now')
+              WHERE id = ?
+            `).run(now.toISOString(), endDate.toISOString(), sub.id);
+
+            db.prepare("UPDATE users SET subscription_status = 'active', updated_at = datetime('now') WHERE id = ?")
+              .run(sub.user_id);
+          }
+        }
+        break;
+      }
+
+      case 'BILLING.SUBSCRIPTION.SUSPENDED':
+      case 'BILLING.SUBSCRIPTION.EXPIRED': {
+        const expiredId = resource.id;
+        if (expiredId) {
+          const sub = db.prepare(
+            "SELECT * FROM subscriptions WHERE paypal_subscription_id = ?"
+          ).get(expiredId);
+
+          if (sub) {
+            const newStatus = eventType === 'BILLING.SUBSCRIPTION.EXPIRED' ? 'expired' : 'suspended';
+            db.prepare("UPDATE subscriptions SET status = ?, updated_at = datetime('now') WHERE id = ?")
+              .run(newStatus, sub.id);
+
+            db.prepare("UPDATE users SET subscription_status = 'past_due', updated_at = datetime('now') WHERE id = ?")
+              .run(sub.user_id);
+          }
+        }
+        break;
+      }
+    }
+
+    res.json({ received: true });
+  } catch (err) {
+    console.error('[paypal] Webhook error:', err);
+    res.status(200).json({ received: true }); // Always ack webhooks
   }
 });
 
@@ -186,130 +387,6 @@ router.post('/capture', async (req, res) => {
   } catch (err) {
     console.error('[paypal] Capture error:', err);
     res.status(500).json({ error: 'Failed to capture subscription', detail: err.message });
-  }
-});
-
-// POST /api/paypal/webhook — handle PayPal webhook events
-router.post('/webhook', async (req, res) => {
-  try {
-    // Verify webhook signature if configured
-    if (paypalService.isPaypalConfigured()) {
-      const isValid = await paypalService.verifyWebhookSignature(
-        req.headers,
-        req.body
-      );
-      if (!isValid) {
-        console.error('[paypal] Webhook signature verification failed');
-        return res.status(401).json({ error: 'Invalid signature' });
-      }
-    }
-
-    const eventType = req.body?.event_type;
-    const resource = req.body?.resource;
-
-    console.log(`[paypal] Webhook received: ${eventType}`);
-
-    if (!eventType || !resource) {
-      return res.status(200).json({ received: true });
-    }
-
-    const db = getDb();
-
-    switch (eventType) {
-      case 'PAYMENT.SALE.COMPLETED': {
-        // Subscription payment received — extend period
-        const billingAgreementId = resource.billing_agreement_id;
-        if (billingAgreementId) {
-          const sub = db.prepare(
-            "SELECT * FROM subscriptions WHERE paypal_subscription_id = ?"
-          ).get(billingAgreementId);
-
-          if (sub) {
-            const now = new Date();
-            const endDate = new Date(now);
-            endDate.setMonth(endDate.getMonth() + 1);
-
-            db.prepare(`
-              UPDATE subscriptions SET status = 'active', current_period_end = ?, updated_at = datetime('now')
-              WHERE id = ?
-            `).run(endDate.toISOString(), sub.id);
-
-            db.prepare("UPDATE users SET subscription_status = 'active', updated_at = datetime('now') WHERE id = ?")
-              .run(sub.user_id);
-          }
-        }
-        break;
-      }
-
-      case 'BILLING.SUBSCRIPTION.CANCELLED': {
-        const subId = resource.id;
-        if (subId) {
-          const sub = db.prepare(
-            "SELECT * FROM subscriptions WHERE paypal_subscription_id = ?"
-          ).get(subId);
-
-          if (sub) {
-            db.prepare(`
-              UPDATE subscriptions SET status = 'canceled', cancel_at_period_end = 1, updated_at = datetime('now')
-              WHERE id = ?
-            `).run(sub.id);
-
-            db.prepare("UPDATE users SET subscription_tier = 'free', subscription_status = 'inactive', updated_at = datetime('now') WHERE id = ?")
-              .run(sub.user_id);
-          }
-        }
-        break;
-      }
-
-      case 'BILLING.SUBSCRIPTION.ACTIVATED': {
-        const activatedId = resource.id;
-        if (activatedId) {
-          const sub = db.prepare(
-            "SELECT * FROM subscriptions WHERE paypal_subscription_id = ?"
-          ).get(activatedId);
-
-          if (sub) {
-            const now = new Date();
-            const endDate = new Date(now);
-            endDate.setMonth(endDate.getMonth() + 1);
-
-            db.prepare(`
-              UPDATE subscriptions SET status = 'active', current_period_start = ?, current_period_end = ?, updated_at = datetime('now')
-              WHERE id = ?
-            `).run(now.toISOString(), endDate.toISOString(), sub.id);
-
-            db.prepare("UPDATE users SET subscription_status = 'active', updated_at = datetime('now') WHERE id = ?")
-              .run(sub.user_id);
-          }
-        }
-        break;
-      }
-
-      case 'BILLING.SUBSCRIPTION.SUSPENDED':
-      case 'BILLING.SUBSCRIPTION.EXPIRED': {
-        const expiredId = resource.id;
-        if (expiredId) {
-          const sub = db.prepare(
-            "SELECT * FROM subscriptions WHERE paypal_subscription_id = ?"
-          ).get(expiredId);
-
-          if (sub) {
-            const newStatus = eventType === 'BILLING.SUBSCRIPTION.EXPIRED' ? 'expired' : 'suspended';
-            db.prepare("UPDATE subscriptions SET status = ?, updated_at = datetime('now') WHERE id = ?")
-              .run(newStatus, sub.id);
-
-            db.prepare("UPDATE users SET subscription_status = 'past_due', updated_at = datetime('now') WHERE id = ?")
-              .run(sub.user_id);
-          }
-        }
-        break;
-      }
-    }
-
-    res.json({ received: true });
-  } catch (err) {
-    console.error('[paypal] Webhook error:', err);
-    res.status(200).json({ received: true }); // Always ack webhooks
   }
 });
 
