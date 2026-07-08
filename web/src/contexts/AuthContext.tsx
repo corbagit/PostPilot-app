@@ -68,7 +68,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   const register = useCallback(async (name: string, email: string, password: string) => {
     try {
-      const res = await api.post('/auth/register', { name, email, password })
+      const res = await api.post('/auth/signup', { name, email, password })
       const { user: u, token } = res.data
       localStorage.setItem('postpilot_token', token)
       localStorage.setItem('postpilot_user', JSON.stringify(u))

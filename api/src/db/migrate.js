@@ -91,6 +91,33 @@ const MIGRATIONS = [
       CREATE INDEX IF NOT EXISTS idx_pageviews_user_id ON pageviews(user_id);
       CREATE INDEX IF NOT EXISTS idx_pageviews_created_at ON pageviews(created_at);
     `
+  },
+  {
+    version: 4,
+    name: 'add_monthly_usage_and_promos',
+    sql: `
+      CREATE TABLE IF NOT EXISTS usage_months (
+        id TEXT PRIMARY KEY,
+        user_id TEXT NOT NULL,
+        month TEXT NOT NULL,
+        posts_generated INTEGER DEFAULT 0,
+        created_at TEXT DEFAULT (datetime('now')),
+        updated_at TEXT DEFAULT (datetime('now')),
+        FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
+        UNIQUE(user_id, month)
+      );
+      CREATE INDEX IF NOT EXISTS idx_usage_months_user_month ON usage_months(user_id, month);
+
+      CREATE TABLE IF NOT EXISTS promo_redemptions (
+        id TEXT PRIMARY KEY,
+        user_id TEXT NOT NULL,
+        code TEXT NOT NULL,
+        redeemed_at TEXT DEFAULT (datetime('now')),
+        FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
+        UNIQUE(user_id, code)
+      );
+      CREATE INDEX IF NOT EXISTS idx_promo_user ON promo_redemptions(user_id);
+    `
   }
 ];
 

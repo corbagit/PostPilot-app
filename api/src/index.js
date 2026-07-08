@@ -5,12 +5,14 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 import { getDb, closeDb } from './db/connection.js';
 import { runMigrations } from './db/migrate.js';
+import { rateLimit } from './middleware/rateLimit.js';
 import authRoutes from './routes/auth.js';
 import postRoutes from './routes/posts.js';
 import billingRoutes from './routes/billing.js';
 import paypalRoutes from './routes/paypal.js';
 import analyticsRoutes from './routes/analytics.js';
 import adminRoutes from './routes/admin.js';
+import promoRoutes from './routes/promo.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const PORT = parseInt(process.env.PORT || '3000', 10);
@@ -25,11 +27,15 @@ app.use(cors({
   allowedHeaders: ['Content-Type', 'Authorization']
 }));
 
+// Rate limiting — 60 requests per minute per IP by default
+const apiLimiter = rateLimit({ windowMs: 60_000, maxRequests: 60 });
+const authLimiter = rateLimit({ windowMs: 15 * 60_000, maxRequests: 15 }); // stricter for auth
+
 // Raw body parser for webhooks (must be registered before json parser)
 app.use('/api/billing/webhook', express.raw({ type: 'application/json' }));
 app.use('/api/paypal/webhook', express.raw({ type: 'application/json' }));
 // JSON body parser for all other routes
-app.use(express.json());
+app.use(express.json({ limit: '1mb' }));
 
 // ── Serve Frontend & Brand Assets ─────────────────────
 const publicPath = path.join(__dirname, 'public');
@@ -40,15 +46,22 @@ const brandPath = path.join(publicPath, 'brand');
 app.use('/brand', express.static(brandPath));
 
 // ── API Routes ─────────────────────────────────────────
-app.use('/api/auth', authRoutes);
-app.use('/api/posts', postRoutes);
-app.use('/api/billing', billingRoutes);
-app.use('/api/paypal', paypalRoutes);
-app.use('/api/analytics', analyticsRoutes);
-app.use('/api/admin', adminRoutes);
-app.use('/api/analytics', adminRoutes); // Also mount for pageview endpoint
 
-// Health check
+// Auth routes with stricter rate limiting
+app.use('/api/auth', authLimiter, authRoutes);
+
+// Core API routes with standard rate limiting
+app.use('/api/posts', apiLimiter, postRoutes);
+app.use('/api/billing', apiLimiter, billingRoutes);
+app.use('/api/paypal', apiLimiter, paypalRoutes);
+app.use('/api/analytics', apiLimiter, analyticsRoutes);
+app.use('/api/admin', apiLimiter, adminRoutes);
+app.use('/api/promo', apiLimiter, promoRoutes);
+
+// Also mount admin for pageview endpoint (legacy compatibility)
+app.use('/api/analytics', adminRoutes);
+
+// Health check (no rate limit)
 app.get('/api/health', (req, res) => {
   res.json({
     status: 'ok',
