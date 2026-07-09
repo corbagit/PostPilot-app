@@ -17,14 +17,13 @@ api.interceptors.request.use((config) => {
   return config
 })
 
-// Handle 401 responses — redirect to login
+// Handle 401 responses — clear auth, let AuthContext handle redirect
 api.interceptors.response.use(
   (response) => response,
   (error) => {
     if (error.response?.status === 401) {
       localStorage.removeItem('postpilot_token')
       localStorage.removeItem('postpilot_user')
-      window.location.href = '/login'
     }
     return Promise.reject(error)
   }
