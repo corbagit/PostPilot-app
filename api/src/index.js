@@ -38,7 +38,7 @@ app.use('/api/paypal/webhook', express.raw({ type: 'application/json' }));
 app.use(express.json({ limit: '1mb' }));
 
 // ── Serve Frontend & Brand Assets ─────────────────────
-const publicPath = path.join(__dirname, 'public');
+const publicPath = path.join(__dirname, '..', '..', '..', 'web', 'dist');
 app.use(express.static(publicPath));
 
 // Also serve brand from public/brand for /brand/* paths
