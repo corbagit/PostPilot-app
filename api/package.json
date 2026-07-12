@@ -6,8 +6,8 @@
   "type": "module",
   "scripts": {
     "start": "node src/index.js",
-    "build": "npm ci && cd ../web && npm install && npm run build && cp -r ../web/dist/* ../api/src/public/"
-    "build:frontend": "cd ../web && npm install && npm run build",,
+    "build": "npm ci && cd ../web && npm install && npm run build && cp -r ../web/dist/* ../api/src/public/",
+    "build:frontend": "cd ../web && npm install && npm run build",
     "dev": "node --watch src/index.js",
     "migrate": "node src/db/migrate.js",
     "test": "node --test tests/",
