@@ -6,7 +6,7 @@
   "type": "module",
   "scripts": {
     "start": "node src/index.js",
-    "build": "cd ../web && npm install && npm run build",
+    "build": "cd ../web && npm install && npm run build"
     "build:frontend": "cd ../web && npm install && npm run build",
     "dev": "node --watch src/index.js",
     "migrate": "node src/db/migrate.js",
