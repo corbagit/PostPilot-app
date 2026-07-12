@@ -1,7 +1,4 @@
 {
   "name": "postpilot",
-  "private": true,
-  "scripts": {
-    "build": "cd api && npm run build"
-  }
+  "private": true
 }
