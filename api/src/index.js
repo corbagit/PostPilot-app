@@ -41,10 +41,6 @@ app.use(express.json({ limit: '1mb' }));
 const publicPath = path.join(__dirname, '..', '..', '..', 'web', 'dist');
 app.use(express.static(publicPath));
 
-// Also serve brand from public/brand for /brand/* paths
-const brandPath = path.join(publicPath, 'brand');
-app.use('/brand', express.static(brandPath));
-
 // ── API Routes ─────────────────────────────────────────
 
 // Auth routes with stricter rate limiting
