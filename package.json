@@ -1,0 +1,10 @@
+json
+{
+  "name": "postpilot",
+  "private": true,
+  "version": "1.0.0",
+  "scripts": {
+    "build": "cd api && npm run build",
+    "start": "cd api && node src/index.js"
+  }
+}
