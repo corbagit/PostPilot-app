@@ -225,37 +225,8 @@ router.post('/webhook', async (req, res) => {
 
 // Mock subscription for development without Stripe
 function handleMockSubscription(req, res, tier) {
-  const db = getDb();
-  const subId = uuidv4();
-  const now = new Date();
-  const endDate = new Date(now);
-  endDate.setMonth(endDate.getMonth() + 1);
-
-  // Cancel any existing subscriptions
-  db.prepare("UPDATE subscriptions SET status = 'canceled' WHERE user_id = ?").run(req.user.id);
-
-  db.prepare(`
-    INSERT INTO subscriptions (id, user_id, stripe_subscription_id, stripe_price_id, status, tier, current_period_start, current_period_end)
-    VALUES (?, ?, ?, ?, ?, ?, ?, ?)
-  `).run(
-    subId, req.user.id, `mock_sub_${subId}`, PRICES[tier],
-    'active', tier,
-    now.toISOString(), endDate.toISOString()
-  );
-
-  db.prepare("UPDATE users SET subscription_tier = ?, subscription_status = 'active', updated_at = datetime('now') WHERE id = ?")
-    .run(tier, req.user.id);
-
-  res.json({
-    success: true,
-    url: '/dashboard?checkout=success',
-    subscription: {
-      id: subId,
-      tier,
-      status: 'active',
-      current_period_end: endDate.toISOString()
-    },
-    message: `Subscribed to ${PLANS[tier].name} plan (mock mode)`
+  res.status(503).json({
+    error: 'Payment provider not configured. Please connect Stripe or use PayPal.'
   });
 }
 
