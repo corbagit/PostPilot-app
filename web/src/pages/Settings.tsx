@@ -26,6 +26,8 @@ export default function Settings() {
   const [saved, setSaved] = useState(false)
   const [error, setError] = useState('')
   const [paypalMsg, setPaypalMsg] = useState('')
+  const [subscriptionError, setSubscriptionError] = useState('')
+  const [upgrading, setUpgrading] = useState(false)
 
   // Determine current payment method (mock — will come from API)
   const paymentMethod = user?.subscription_tier === 'free' ? null : MOCK_PAYMENT_METHOD
@@ -132,24 +134,50 @@ export default function Settings() {
 
             {/* Plan actions */}
             <div className="flex flex-wrap gap-3 mb-4">
-              <button
-                onClick={async () => {
-                  try {
-                    const tier = user?.subscription_tier === 'pro' ? 'starter' : 'pro'
-                    const res = await api.post('/billing/create-checkout-session', { tier })
-                    if (res.data.url) window.location.href = res.data.url
-                  } catch (err: any) {
-                    setError(err.response?.data?.error || 'Failed to process upgrade')
-                  }
-                }}
-                className="px-5 py-2.5 rounded-xl text-sm font-semibold bg-white/10 text-white hover:bg-white/20 transition-all cursor-pointer"
-              >
-                {user?.subscription_tier === 'pro' ? 'Downgrade to Starter' : 'Upgrade to Pro'}
-              </button>
+              {user?.subscription_tier === 'pro' ? (
+                <a
+                  href="https://www.paypal.com/myaccount/autopay/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="px-5 py-2.5 rounded-xl text-sm font-semibold bg-white/10 text-white hover:bg-white/20 transition-all cursor-pointer"
+                >
+                  Manage PayPal Billing
+                </a>
+              ) : (
+                <button
+                  onClick={async () => {
+                    setSubscriptionError('')
+                    setUpgrading(true)
+                    try {
+                      const res = await api.post('/paypal/create-subscription', {
+                        plan_id: 'postpilot_pro_monthly',
+                        tier: 'pro',
+                      })
+                      if (res.data.approval_url) {
+                        window.location.href = res.data.approval_url
+                      } else {
+                        setSubscriptionError('No approval URL returned from server')
+                      }
+                    } catch (err: any) {
+                      setSubscriptionError(err.response?.data?.error || 'Failed to create PayPal subscription')
+                    } finally {
+                      setUpgrading(false)
+                    }
+                  }}
+                  disabled={upgrading}
+                  className="px-5 py-2.5 rounded-xl text-sm font-semibold bg-white/10 text-white hover:bg-white/20 disabled:opacity-50 transition-all cursor-pointer"
+                >
+                  {upgrading ? 'Redirecting to PayPal...' : 'Upgrade to Pro'}
+                </button>
+              )}
               <button className="px-5 py-2.5 rounded-xl text-sm font-semibold bg-red-500/10 text-red-400 hover:bg-red-500/20 transition-all cursor-pointer">
                 Cancel Subscription
               </button>
             </div>
+
+            {subscriptionError && (
+              <p className="text-sm text-red-400 mb-4">{subscriptionError}</p>
+            )}
 
             {/* Change Payment Method */}
             <div className="mt-4 pt-4 border-t border-slate-700">
