@@ -22,16 +22,16 @@ export default function Footer() {
           <div>
             <h4 className="text-white font-semibold text-sm mb-4">Company</h4>
             <div className="flex flex-col gap-2 text-sm">
-              <span className="hover:text-white transition-colors cursor-default">About</span>
-              <span className="hover:text-white transition-colors cursor-default">Blog</span>
-              <span className="hover:text-white transition-colors cursor-default">Contact</span>
+              <a href="#" className="hover:text-white transition-colors">About</a>
+              <a href="#" className="hover:text-white transition-colors">Blog</a>
+              <a href="#" className="hover:text-white transition-colors">Contact</a>
             </div>
           </div>
           <div>
             <h4 className="text-white font-semibold text-sm mb-4">Legal</h4>
             <div className="flex flex-col gap-2 text-sm">
-              <span className="hover:text-white transition-colors cursor-default">Privacy</span>
-              <span className="hover:text-white transition-colors cursor-default">Terms</span>
+              <a href="#" className="hover:text-white transition-colors">Privacy</a>
+              <a href="#" className="hover:text-white transition-colors">Terms</a>
             </div>
           </div>
         </div>
