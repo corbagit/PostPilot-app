@@ -248,6 +248,7 @@ function handleMockSubscription(req, res, tier) {
 
   res.json({
     success: true,
+    url: '/dashboard?checkout=success',
     subscription: {
       id: subId,
       tier,
