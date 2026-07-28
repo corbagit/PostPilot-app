@@ -31,6 +31,7 @@ export default function MyPosts() {
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState('')
   const [updatingId, setUpdatingId] = useState<string | null>(null)
+  const [expandedIds, setExpandedIds] = useState<Set<string>>(new Set())
 
   const fetchPosts = useCallback(async () => {
     try {
@@ -45,6 +46,18 @@ export default function MyPosts() {
   }, [])
 
   useEffect(() => { fetchPosts() }, [fetchPosts])
+
+  const toggleExpand = (id: string) => {
+    setExpandedIds(prev => {
+      const next = new Set(prev)
+      if (next.has(id)) next.delete(id)
+      else next.add(id)
+      return next
+    })
+  }
+
+  const truncate = (text: string, max: number) =>
+    text.length > max ? text.slice(0, max) + '...' : text
 
   const filteredPosts = filter === 'all' ? posts : posts.filter(p => p.status === filter)
 
@@ -118,43 +131,72 @@ export default function MyPosts() {
             </div>
           ) : (
             <div className="space-y-3">
-              {filteredPosts.map(post => (
-                <div key={post.id} className="bg-slate-900 border border-slate-800 rounded-xl p-5 flex items-start justify-between gap-4 hover:border-slate-700 transition-all">
-                  <div className="flex-1 min-w-0">
-                    <div className="flex items-center gap-2 mb-2">
-                      <span>{platformIcons[post.platform] || '📱'}</span>
-                      <span className="text-xs font-semibold text-slate-400 capitalize">{post.platform}</span>
-                      <span className="text-xs text-slate-600">·</span>
-                      <span className={`text-xs font-semibold px-2 py-0.5 rounded-full ${statusColors[post.status]}`}>
-                        {post.status}
-                      </span>
-                    </div>
-                    <p className="text-sm font-semibold text-white">{post.seed_idea}</p>
-                    <p className="text-xs text-slate-500 mt-1">
-                      Created {new Date(post.created_at).toLocaleDateString()}
-                    </p>
-                  </div>
+              {filteredPosts.map(post => {
+                const isExpanded = expandedIds.has(post.id)
+                return (
+                  <div key={post.id} onClick={() => toggleExpand(post.id)}
+                    className="bg-slate-900 border border-slate-800 rounded-xl p-5 hover:border-slate-700 transition-all cursor-pointer">
+                    <div className="flex items-start justify-between gap-4">
+                      <div className="flex-1 min-w-0">
+                        <div className="flex items-center gap-2 mb-2">
+                          <span>{platformIcons[post.platform] || '📱'}</span>
+                          <span className="text-xs font-semibold text-slate-400 capitalize">{post.platform}</span>
+                          <span className="text-xs text-slate-600">·</span>
+                          <span className={`text-xs font-semibold px-2 py-0.5 rounded-full ${statusColors[post.status]}`}>
+                            {post.status}
+                          </span>
+                        </div>
+                        <p className="text-sm font-semibold text-white">{post.seed_idea}</p>
+                        {post.content && (
+                          <p className="text-xs text-slate-400 mt-1.5 leading-relaxed">
+                            {isExpanded ? post.content : truncate(post.content, 120)}
+                          </p>
+                        )}
+                        <p className="text-xs text-slate-500 mt-1">
+                          Created {new Date(post.created_at).toLocaleDateString()}
+                        </p>
+                      </div>
 
-                  <div className="flex items-center gap-2 shrink-0">
-                    {post.status === 'draft' && (
-                      <button onClick={() => updateStatus(post.id, 'published')} disabled={updatingId === post.id}
-                        className="px-3 py-1.5 rounded-lg text-xs font-semibold bg-blue-500/10 text-blue-400 hover:bg-blue-500/20 disabled:opacity-50 transition-all cursor-pointer">
-                        {updatingId === post.id ? '...' : 'Publish'}
-                      </button>
+                      <div className="flex items-center gap-2 shrink-0">
+                        {post.status !== 'published' && (
+                          <button onClick={(e) => { e.stopPropagation(); updateStatus(post.id, 'published') }} disabled={updatingId === post.id}
+                            className="px-3 py-1.5 rounded-lg text-xs font-semibold bg-blue-500/10 text-blue-400 hover:bg-blue-500/20 disabled:opacity-50 transition-all cursor-pointer">
+                            {updatingId === post.id ? '...' : 'Publish'}
+                          </button>
+                        )}
+                        {post.status === 'published' && (
+                          <button onClick={(e) => { e.stopPropagation(); updateStatus(post.id, 'draft') }} disabled={updatingId === post.id}
+                            className="px-3 py-1.5 rounded-lg text-xs font-semibold bg-amber-500/10 text-amber-400 hover:bg-amber-500/20 disabled:opacity-50 transition-all cursor-pointer">
+                            {updatingId === post.id ? '...' : 'Unpublish'}
+                          </button>
+                        )}
+                        <button onClick={(e) => { e.stopPropagation(); deletePost(post.id) }} disabled={updatingId === post.id}
+                          className="px-3 py-1.5 rounded-lg text-xs font-semibold bg-red-500/10 text-red-400 hover:bg-red-500/20 disabled:opacity-50 transition-all cursor-pointer">
+                          {updatingId === post.id ? '...' : 'Delete'}
+                        </button>
+                        <span className={`text-slate-500 transition-transform ${isExpanded ? 'rotate-180' : ''}`}>▾</span>
+                      </div>
+                    </div>
+
+                    {isExpanded && (
+                      <div className="mt-4 pt-4 border-t border-slate-800 space-y-3" onClick={e => e.stopPropagation()}>
+                        {post.caption && (
+                          <div>
+                            <p className="text-xs font-semibold text-slate-500 uppercase tracking-wide mb-1">Caption</p>
+                            <p className="text-sm text-slate-300 leading-relaxed">{post.caption}</p>
+                          </div>
+                        )}
+                        {post.hashtags && (
+                          <div>
+                            <p className="text-xs font-semibold text-slate-500 uppercase tracking-wide mb-1">Hashtags</p>
+                            <p className="text-sm text-blue-400">{post.hashtags}</p>
+                          </div>
+                        )}
+                      </div>
                     )}
-                    {post.status === 'scheduled' && (
-                      <button onClick={() => updateStatus(post.id, 'published')} disabled={updatingId === post.id}
-                        className="px-3 py-1.5 rounded-lg text-xs font-semibold bg-emerald-500/10 text-emerald-400 hover:bg-emerald-500/20 disabled:opacity-50 transition-all cursor-pointer">
-                        {updatingId === post.id ? '...' : 'Publish'}
-                      </button>
-                    )}
-                    <button onClick={() => deletePost(post.id)} disabled={updatingId === post.id}
-                      className="px-3 py-1.5 rounded-lg text-xs font-semibold bg-red-500/10 text-red-400 hover:bg-red-500/20 disabled:opacity-50 transition-all cursor-pointer">
-                      {updatingId === post.id ? '...' : 'Delete'}
-                    </button>
                   </div>
-                </div>
-              ))}
+                )
+              })}
             </div>
           )}
         </div>
