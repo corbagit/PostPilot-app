@@ -5,7 +5,6 @@ const navItems = [
   { to: '/dashboard', label: 'Dashboard', icon: '📊' },
   { to: '/generate', label: 'Generate', icon: '✨' },
   { to: '/my-posts', label: 'My Posts', icon: '📝' },
-  { to: '/admin', label: 'Admin', icon: '📈' },
   { to: '/settings', label: 'Settings', icon: '⚙️' },
 ]
 

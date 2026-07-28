@@ -137,9 +137,9 @@ export default function MyPosts() {
 
                   <div className="flex items-center gap-2 shrink-0">
                     {post.status === 'draft' && (
-                      <button onClick={() => updateStatus(post.id, 'scheduled')} disabled={updatingId === post.id}
+                      <button onClick={() => updateStatus(post.id, 'published')} disabled={updatingId === post.id}
                         className="px-3 py-1.5 rounded-lg text-xs font-semibold bg-blue-500/10 text-blue-400 hover:bg-blue-500/20 disabled:opacity-50 transition-all cursor-pointer">
-                        {updatingId === post.id ? '...' : 'Schedule'}
+                        {updatingId === post.id ? '...' : 'Publish'}
                       </button>
                     )}
                     {post.status === 'scheduled' && (

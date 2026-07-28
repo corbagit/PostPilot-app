@@ -145,12 +145,20 @@ export default function Settings() {
 
             {/* Plan actions */}
             <div className="flex flex-wrap gap-3 mb-4">
-              <a
-                href={`/api/billing/create-checkout-session?tier=${user?.subscription_tier === 'pro' ? 'starter' : 'pro'}`}
-                className="px-5 py-2.5 rounded-xl text-sm font-semibold bg-white/10 text-white hover:bg-white/20 transition-all inline-block"
+              <button
+                onClick={async () => {
+                  try {
+                    const tier = user?.subscription_tier === 'pro' ? 'starter' : 'pro'
+                    const res = await api.post('/billing/create-checkout-session', { tier })
+                    if (res.data.url) window.location.href = res.data.url
+                  } catch (err: any) {
+                    setError(err.response?.data?.error || 'Failed to process upgrade')
+                  }
+                }}
+                className="px-5 py-2.5 rounded-xl text-sm font-semibold bg-white/10 text-white hover:bg-white/20 transition-all cursor-pointer"
               >
                 {user?.subscription_tier === 'pro' ? 'Downgrade to Starter' : 'Upgrade to Pro'}
-              </a>
+              </button>
               <button className="px-5 py-2.5 rounded-xl text-sm font-semibold bg-red-500/10 text-red-400 hover:bg-red-500/20 transition-all cursor-pointer">
                 Cancel Subscription
               </button>
@@ -208,12 +216,19 @@ export default function Settings() {
                   </a>
                   <div className="border-t border-slate-700 pt-3">
                     <p className="text-xs text-slate-400 mb-2">Switch to card payments:</p>
-                    <a
-                      href={`/api/billing/create-checkout-session?tier=${user?.subscription_tier}`}
-                      className="px-5 py-2.5 rounded-xl text-sm font-semibold bg-white/10 text-white hover:bg-white/20 transition-all inline-block"
+                    <button
+                      onClick={async () => {
+                        try {
+                          const res = await api.post('/billing/create-checkout-session', { tier: user?.subscription_tier || 'pro' })
+                          if (res.data.url) window.location.href = res.data.url
+                        } catch (err: any) {
+                          setError(err.response?.data?.error || 'Failed to switch payment')
+                        }
+                      }}
+                      className="px-5 py-2.5 rounded-xl text-sm font-semibold bg-white/10 text-white hover:bg-white/20 transition-all cursor-pointer"
                     >
                       Switch to Stripe
-                    </a>
+                    </button>
                   </div>
                 </div>
               ) : (
