@@ -9,7 +9,7 @@ interface Post {
   content: string
   caption: string
   hashtags: string
-  status: 'draft' | 'scheduled' | 'published'
+  status: 'draft' | 'published'
   created_at: string
 }
 
@@ -21,13 +21,12 @@ const platformIcons: Record<string, string> = {
 
 const statusColors: Record<string, string> = {
   draft: 'bg-slate-700 text-slate-300',
-  scheduled: 'bg-blue-500/10 text-blue-400',
   published: 'bg-emerald-500/10 text-emerald-400',
 }
 
 export default function MyPosts() {
   const [posts, setPosts] = useState<Post[]>([])
-  const [filter, setFilter] = useState<'all' | 'draft' | 'scheduled' | 'published'>('all')
+  const [filter, setFilter] = useState<'all' | 'draft' | 'published'>('all')
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState('')
   const [updatingId, setUpdatingId] = useState<string | null>(null)
@@ -61,7 +60,7 @@ export default function MyPosts() {
 
   const filteredPosts = filter === 'all' ? posts : posts.filter(p => p.status === filter)
 
-  const updateStatus = async (id: string, status: 'draft' | 'scheduled' | 'published') => {
+  const updateStatus = async (id: string, status: 'draft' | 'published') => {
     setUpdatingId(id)
     try {
       await api.patch(`/posts/${id}`, { status })
@@ -96,7 +95,7 @@ export default function MyPosts() {
           </div>
 
           <div className="flex gap-1 bg-slate-900 rounded-lg p-1 border border-slate-800">
-            {(['all', 'draft', 'scheduled', 'published'] as const).map(f => (
+            {(['all', 'draft', 'published'] as const).map(f => (
               <button key={f} onClick={() => setFilter(f)}
                 className={`px-4 py-1.5 rounded-md text-xs font-semibold capitalize transition-all cursor-pointer ${
                   filter === f ? 'bg-slate-800 text-white' : 'text-slate-500 hover:text-white'
